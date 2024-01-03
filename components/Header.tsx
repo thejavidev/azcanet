@@ -32,11 +32,6 @@ const Header = () => {
     };
   }, []);
 
-//   const openAltMenu = (name:any) => {
-//     const altMenu = alt_item.current.classList;
-
-//    console.log(name)
-//   };
   const openAltMenu = (name: any) => {
     setOpenSubCategory((prev) => (prev === name ? null : name));
   };
@@ -57,8 +52,6 @@ const Header = () => {
     ? ""
     : data?.options?.navbar_colors?.navbar_btn;
 
-  
-
   return (
     <>
       <header className="bg-white w-full shadow-[2px_2px_4px_0_rgba(2_45_98_0.1)] z-[200] absolute top-0 left-0 right-0 tran ">
@@ -75,7 +68,7 @@ const Header = () => {
           </div>
           <div className="w-full flex justify-end ">
             <ul
-              className={` flex  gap-2   justify-evenly  w-full transition-all  xl:flex-col xl:fixed xl:top-[-100%] xl:right-0 xl:left-0 xl:px-8`}
+              className={` flex  gap-2   justify-evenly bg-[#fff]  w-full transition-all  xl:flex-col xl:fixed xl:top-[-100%] xl:right-0 xl:left-0 xl:px-8`}
               ref={menu}
             >
               {data?.header &&
@@ -83,7 +76,7 @@ const Header = () => {
                   <li
                     key={i}
                     ref={opacityLi}
-                    onClick={()=>openAltMenu(item?.alt_menu)}
+                    onClick={() => openAltMenu(item?.alt_menu)}
                     className={` nav_item flex gap-2 xl:gap-0  cursor-pointer  xl:transition-all xl:ease-out   p-[8px] uppercase bg-[#ec5a44] rounded-md tl  items-center justify-center text-lg font-semibold text-[#fff] border-[1px] border-solid border-transparent  relative z-[250]  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px] xl:flex-col xl:items-start`}
                   >
                     <div className="flex items-center">
@@ -97,21 +90,22 @@ const Header = () => {
                     {item?.alt_menu?.length > 0 && (
                       <ul
                         ref={alt_item}
-                        className={`  absolute top-0 left-0 right-0 alt_item flex w-max xl:static   bg-[#fff] xl:bg-transparent flex-col  tlss rounded-md py-[7px] px-[20px] xl:px-[5px] tl opacity-0 invisible xl:opacity-100 xl:visible ${openSubCategory === item?.alt_menu
-                            ? "xl:flex h-auto f"
-                            : "xl:hidden h-0"
-                        }}`}
+                        className={`absolute top-0 left-0 right-0 alt_item flex w-max xl:static bg-[#fff] xl:bg-transparent flex-col tlss rounded-md py-[7px] px-[20px] xl:px-[5px] tl opacity-0 invisible xl:opacity-100 xl:visible  ${
+                          isMobile
+                            ? openSubCategory === item?.alt_menu
+                              ? "xl:flex h-auto bg-[#fff]"
+                              : "xl:hidden h-0"
+                            : ""
+                        }`}
                       >
-                        {item?.alt_menu && 
-                        openSubCategory === item?.alt_menu &&
-                          item?.alt_menu?.map((item, i) => (
-                            <li
-                              key={i}
-                              className="text-[#4f4f4f] capitalize py-[14px] xl:py-[5px] hover:text-[#ec5a44] tl inline-block text-[14px]"
-                            >
-                              <Link href={item?.slug_en}>{item?.menu_en}</Link>
-                            </li>
-                          ))}
+                        {item?.alt_menu?.map((item, i) => (
+                          <li
+                            key={i}
+                            className="text-[#4f4f4f] capitalize py-[14px] xl:py-[5px] hover:text-[#ec5a44] tl inline-block text-[14px]"
+                          >
+                            <Link href={item?.slug_en}>{item?.menu_en}</Link>
+                          </li>
+                        ))}
                       </ul>
                     )}
                   </li>
@@ -127,7 +121,7 @@ const Header = () => {
               </li>
               <li
                 style={{
-                  background: mobileSupport
+                  background: mobileSupport,
                 }}
                 className={` flex gap-2 h-full  p-[8px] cursor-pointer   uppercase rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid border-transparent xl:items-start xl:justify-start xl:bg-transparent xl:text-[#ec5a44] 2xl:text-[13px] md:p-[4px]`}
               >
