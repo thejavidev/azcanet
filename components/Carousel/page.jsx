@@ -10,13 +10,13 @@ const page = ({ banner }) => {
 
   const nextSlide = () => {
     setCurrentSlide((prevSlide) =>
-      prevSlide === slides.length - 1 ? 0 : prevSlide + 1
+      prevSlide === banner.length - 1 ? 0 : prevSlide + 1
     );
   };
 
   const prevSlide = () => {
     setCurrentSlide((prevSlide) =>
-      prevSlide === 0 ? slides.length - 1 : prevSlide - 1
+      prevSlide === 0 ? banner.length - 1 : prevSlide - 1
     );
   };
 
@@ -32,6 +32,7 @@ const page = ({ banner }) => {
           </p>
           <Link
             href={`${banner[currentSlide]?.link}`}
+            target="_blank"
             className="mt-[20px] px-[16px] py-[10px] w-fit bg-[#ec5a44] hover-effect uppercase hover:bg-white hover:text-[#ec5a44] border border-[#ec5a44] text-white rounded-[4px] font-[400] flex items-center hover:gap-[20px] gap-[10px]"
           >
             {banner[currentSlide]?.button_en}
@@ -48,17 +49,17 @@ const page = ({ banner }) => {
               className="w-full h-auto object-cover object-center"
             />
           </div>
-        </div>
         {banner?.length > 1 && (
-          <>
+          <div className="slider-bts">
             <button onClick={prevSlide} className="slider-btn prev">
               <GrPrevious />
             </button>
             <button onClick={nextSlide} className="slider-btn next">
               <GrNext />
             </button>
-          </>
+          </div>
         )}
+        </div>
       </div>
     </>
   );
