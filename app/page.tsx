@@ -1,9 +1,10 @@
-import Home from "@/pages/Home/page";
+import HomePage from "@/pages/Home/HomePage";
+
 
 export default function app() {
   return (
     <>
-      <Home />
+      <HomePage />
     </>
   );
 }

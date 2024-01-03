@@ -1,6 +1,5 @@
 "use client";
 import { Get } from "@/services/fetchServices";
-import { apiFetch } from "@/types/apiType";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
@@ -10,27 +9,37 @@ import { RiMenu3Fill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 
 const Header = () => {
-  const [data, setData] = useState<any>([]);
   const [isMobile, setIsMobile] = useState(false);
   const [openSubCategory, setOpenSubCategory] = useState<string | null>(null);
   const menu = useRef<any>();
   const alt_item = useRef<any>();
   const opacityLi = useRef<any>();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  useEffect(() => {
-    Get().then((res) => {
-      setData(res);
-    });
+  const [cachedData, setCachedData] = useState<any>(null);
 
+
+  useEffect(() => {
+    const cachedData = sessionStorage.getItem("myCacheKey");
+    if (cachedData) {
+      setCachedData(JSON.parse(cachedData));
+    } else {
+      Get().then((res) => {
+        sessionStorage.setItem("myCacheKey", JSON.stringify(res));
+        setCachedData(res);
+      });
+    }
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1299);
     };
     handleResize();
+
     window.addEventListener("resize", handleResize);
     return () => {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
+
+
 
   const openAltMenu = (name: any) => {
     setOpenSubCategory((prev) => (prev === name ? null : name));
@@ -50,7 +59,7 @@ const Header = () => {
 
   const mobileSupport = isMobile
     ? ""
-    : data?.options?.navbar_colors?.navbar_btn;
+    : cachedData?.options?.navbar_colors?.navbar_btn;
 
   return (
     <>
@@ -59,7 +68,11 @@ const Header = () => {
           <div className=" px-[40px] h-full xl:px-[10px]">
             <Link href="/" className="flex items-center justify-center">
               <Image
-                src={data?.headerlogo}
+                src={
+                  cachedData?.headerlogo
+                    ? cachedData?.headerlogo
+                    : "https://azcanet.ca/nac/img/naclogo.svg"
+                }
                 width={140}
                 height={100}
                 alt="azcanet.ca"
@@ -71,8 +84,8 @@ const Header = () => {
               className={` flex  gap-2   justify-evenly bg-[#fff]  w-full transition-all  xl:flex-col xl:fixed xl:top-[-100%] xl:right-0 xl:left-0 xl:px-8`}
               ref={menu}
             >
-              {data?.header &&
-                data?.header?.map((item, i) => (
+              {cachedData?.header &&
+                cachedData?.header?.map((item:any, i:number) => (
                   <li
                     key={i}
                     ref={opacityLi}
@@ -87,7 +100,7 @@ const Header = () => {
                         <FaAngleDown className={`xl:text-[#ec5a44] `} />
                       )}
                     </div>
-                    {item?.alt_menu?.length > 0 && (
+                    {item?.alt_menu && item?.alt_menu?.length > 0 && (
                       <ul
                         ref={alt_item}
                         className={`absolute top-0 left-0 right-0 alt_item flex w-max xl:static bg-[#fff] xl:bg-transparent flex-col tlss rounded-md py-[7px] px-[20px] xl:px-[5px] tl opacity-0 invisible xl:opacity-100 xl:visible  ${
@@ -98,7 +111,7 @@ const Header = () => {
                             : ""
                         }`}
                       >
-                        {item?.alt_menu?.map((item, i) => (
+                        {item?.alt_menu?.map((item:any, i:number) => (
                           <li
                             key={i}
                             className="text-[#4f4f4f] capitalize py-[14px] xl:py-[5px] hover:text-[#ec5a44] tl inline-block text-[14px]"
