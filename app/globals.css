@@ -2,3 +2,5 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('./css1.css');
+
