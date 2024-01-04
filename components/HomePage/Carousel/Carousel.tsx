@@ -20,8 +20,6 @@ const Carousel = ({ banner }: any) => {
     );
   };
 
-  
-
   return (
     <>
       {banner && (
@@ -45,7 +43,11 @@ const Carousel = ({ banner }: any) => {
           <div className="slider">
             <div className="slider-item">
               <Image
-                src={banner?.[currentSlide]?.src}
+                src={
+                  banner?.[currentSlide]?.src
+                    ? banner?.[currentSlide]?.src
+                    : banner?.[currentSlide]?.src
+                }
                 width={1000}
                 height={500}
                 alt="Picture of the banner"
