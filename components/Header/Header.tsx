@@ -33,17 +33,13 @@ const Header = () => {
       setIsMobile(window.innerWidth <= 1299);
     };
     handleResize();
-   
+
     window.addEventListener("resize", handleResize);
     return () => {
-    
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
-
- 
-  
   const openAltMenu = (name: any) => {
     setOpenSubCategory((prev) => (prev === name ? null : name));
   };
@@ -95,37 +91,42 @@ const Header = () => {
                     key={i}
                     ref={opacityLi}
                     onClick={() => openAltMenu(item?.alt_menu)}
-                    className={` nav_item flex gap-2 xl:gap-0  cursor-pointer  xl:transition-all xl:ease-out   p-[8px] uppercase bg-[#ec5a44] rounded-md tl  items-center justify-center text-lg font-semibold text-[#fff] border-[1px] border-solid border-transparent  relative z-[250]  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px] xl:flex-col xl:items-start`}
+                    className={` nav_item flex gap-2 xl:gap-0  h-full  cursor-pointer  xl:transition-all xl:ease-out     tl  items-center justify-center text-lg font-semibold text-[#fff] border-[1px] border-solid border-transparent  relative z-[250]  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px] xl:flex-col xl:items-start`}
                   >
-                    <div className="flex items-center">
-                      <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
-                        {item?.menu_en}
-                      </h1>
-                      {item?.alt_menu?.length > 0 && (
-                        <FaAngleDown className={`xl:text-[#ec5a44] `} />
+                    <Link
+                      href={item?.alt_menu?.length > 0 ? "" : item?.slug_en}
+                      className="w-full h-full  p-[8px] uppercase bg-[#ec5a44] rounded-md"
+                    >
+                      <div className="flex items-center">
+                        <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
+                          {item?.menu_en}
+                        </h1>
+                        {item?.alt_menu?.length > 0 && (
+                          <FaAngleDown className={`xl:text-[#ec5a44] `} />
+                        )}
+                      </div>
+                      {item?.alt_menu && item?.alt_menu?.length > 0 && (
+                        <ul
+                          ref={alt_item}
+                          className={`absolute top-0 left-0 right-0 alt_item flex w-max xl:static bg-[#fff] xl:bg-transparent flex-col tlss rounded-md py-[7px] px-[20px] xl:px-[5px] tl opacity-0 invisible xl:opacity-100 xl:visible  ${
+                            isMobile
+                              ? openSubCategory === item?.alt_menu
+                                ? "xl:flex h-auto bg-[#fff]"
+                                : "xl:hidden h-0"
+                              : ""
+                          }`}
+                        >
+                          {item?.alt_menu?.map((item: any, i: number) => (
+                            <li
+                              key={i}
+                              className="text-[#4f4f4f] capitalize py-[14px] xl:py-[5px] hover:text-[#ec5a44] tl inline-block text-[14px]"
+                            >
+                              <Link href={item?.slug_en}>{item?.menu_en}</Link>
+                            </li>
+                          ))}
+                        </ul>
                       )}
-                    </div>
-                    {item?.alt_menu && item?.alt_menu?.length > 0 && (
-                      <ul
-                        ref={alt_item}
-                        className={`absolute top-0 left-0 right-0 alt_item flex w-max xl:static bg-[#fff] xl:bg-transparent flex-col tlss rounded-md py-[7px] px-[20px] xl:px-[5px] tl opacity-0 invisible xl:opacity-100 xl:visible  ${
-                          isMobile
-                            ? openSubCategory === item?.alt_menu
-                              ? "xl:flex h-auto bg-[#fff]"
-                              : "xl:hidden h-0"
-                            : ""
-                        }`}
-                      >
-                        {item?.alt_menu?.map((item: any, i: number) => (
-                          <li
-                            key={i}
-                            className="text-[#4f4f4f] capitalize py-[14px] xl:py-[5px] hover:text-[#ec5a44] tl inline-block text-[14px]"
-                          >
-                            <Link href={item?.slug_en}>{item?.menu_en}</Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
+                    </Link>
                   </li>
                 ))}
               <li className="flex gap-2 h-full p-[8px] cursor-pointer  uppercase bg-[#ec5a44] rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid border-transparent  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px]">
