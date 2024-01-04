@@ -16,12 +16,13 @@ const Header = () => {
   const opacityLi = useRef<any>();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [cachedData, setCachedData] = useState<any>(null);
-
+  const [show, setShow] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
     const cachedData = sessionStorage.getItem("myCacheKey");
     if (cachedData) {
-      setCachedData(JSON.parse(cachedData));
+      setCachedData(JSON.parse(cachedData)?.data);
     } else {
       Get().then((res) => {
         sessionStorage.setItem("myCacheKey", JSON.stringify(res));
@@ -32,15 +33,17 @@ const Header = () => {
       setIsMobile(window.innerWidth <= 1299);
     };
     handleResize();
-
+   
     window.addEventListener("resize", handleResize);
     return () => {
+    
       window.removeEventListener("resize", handleResize);
     };
   }, []);
 
 
-
+ 
+  
   const openAltMenu = (name: any) => {
     setOpenSubCategory((prev) => (prev === name ? null : name));
   };
@@ -63,7 +66,9 @@ const Header = () => {
 
   return (
     <>
-      <header className="bg-white w-full shadow-[2px_2px_4px_0_rgba(2_45_98_0.1)] z-[200] absolute top-0 left-0 right-0 tran ">
+      <header
+        className={`  bg-white w-full shadow-header z-[200] fixed top-0 left-0 right-0  `}
+      >
         <nav className="py-[10px] px-[20px] xl:px-[10px] flex items-center  gap-4 xl:justify-between">
           <div className=" px-[40px] h-full xl:px-[10px]">
             <Link href="/" className="flex items-center justify-center">
@@ -85,7 +90,7 @@ const Header = () => {
               ref={menu}
             >
               {cachedData?.header &&
-                cachedData?.header?.map((item:any, i:number) => (
+                cachedData?.header?.map((item: any, i: number) => (
                   <li
                     key={i}
                     ref={opacityLi}
@@ -111,7 +116,7 @@ const Header = () => {
                             : ""
                         }`}
                       >
-                        {item?.alt_menu?.map((item:any, i:number) => (
+                        {item?.alt_menu?.map((item: any, i: number) => (
                           <li
                             key={i}
                             className="text-[#4f4f4f] capitalize py-[14px] xl:py-[5px] hover:text-[#ec5a44] tl inline-block text-[14px]"
