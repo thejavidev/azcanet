@@ -33,12 +33,12 @@ const Press: React.FC = () => {
       });
     }
     setTimeout(() => {
-      twitter.current.classList.add("hidden");
+      twitter?.current?.classList?.add("hidden");
     }, 2500);
   }, []);
 
   const openPressMenu = () => {
-    press_menu.current.classList.toggle("hidden");
+    press_menu?.current?.classList?.toggle("hidden");
   };
 
   return (
