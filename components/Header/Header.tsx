@@ -125,9 +125,7 @@ const Header = () => {
                           {item?.alt_menu?.map((item: any, i: number) => {
                             let hostName = "";
                             if (item?.slug_en?.startsWith("https")) {
-                              let url =
-                                item?.slug_en?.startsWith("https") &&
-                                new URL(item?.slug_en);
+                              let url = new URL(item?.slug_en);
                               hostName = url.host;
                             } else {
                               hostName = window.location.host;
@@ -135,9 +133,10 @@ const Header = () => {
                             return (
                               <li
                                 key={i}
-                                className="text-[#4f4f4f] capitalize py-[14px] xl:py-[5px] hover:text-[#ec5a44] tl inline-block text-[14px]"
+                                className="text-[#4f4f4f] capitalize  hover:text-[#ec5a44] tl inline-block text-[14px]"
                               >
                                 <Link
+                                  className="py-[14px] xl:py-[5px] inline-block"
                                   href={item?.slug_en}
                                   target={
                                     window.location.host !== hostName
