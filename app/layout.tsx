@@ -1,6 +1,6 @@
 "use client";
 import { Inter } from "next/font/google";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Get } from "@/services/fetchServices";
 import { CSSTransition } from "react-transition-group"; // Import CSSTransition
 
@@ -18,7 +18,7 @@ export default function RootLayout({
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    Get().then(() => {
+    Get()?.then(() => {
       setLoading(false);
     });
   }, []);

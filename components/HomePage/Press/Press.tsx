@@ -17,7 +17,7 @@ const Press: React.FC = () => {
   const twitter = useRef<any>();
   const targetSlug = "press-centre";
   const press_menu = useRef<any>();
-  const pressCentreItem = (cachedData as CachedData)?.header.find(
+  const pressCentreItem = (cachedData as CachedData)?.header?.find(
     (item: typeHeader) => item?.slug_en === targetSlug
   );
   const altMenuItems = pressCentreItem ? pressCentreItem?.alt_menu : [];

@@ -16,7 +16,7 @@ export const Get = async () => {
 
     // Eğer önbellekteki veri varsa ve refetchOnmount false ise, cacheTime kontrolü yap
     if (currentTime - cachedTime < cacheTime) {
-      return JSON.parse(cachedData).data;
+      return JSON.parse(cachedData);
     }
   }
 
@@ -27,9 +27,9 @@ export const Get = async () => {
   // Eğer önbellekteki veri aynıysa, tekrar yükleme yapmadan mevcut veriyi döndür
   if (
     cachedData &&
-    JSON.stringify(jsonData) === JSON.stringify(JSON.parse(cachedData).data)
+    JSON.stringify(jsonData) === JSON.stringify(JSON.parse(cachedData))
   ) {
-    return JSON.parse(cachedData).data;
+    return JSON.parse(cachedData);
   }
 
   // Elde edilen veriyi önbelleğe ekle
