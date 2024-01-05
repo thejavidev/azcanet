@@ -8,7 +8,6 @@ import FetchData from "@/helpers/FetchData";
 
 const Carousel = () => {
   const { cachedData } = FetchData(["banner"]);
-  console.log(cachedData);
 
   const [currentSlide, setCurrentSlide] = useState(0);
 
