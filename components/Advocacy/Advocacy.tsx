@@ -1,35 +1,24 @@
 "use client"
-import { Get } from "@/services/fetchServices";
 import { typeHeader } from "@/types/apiType";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
 import { FaAngleDown } from "react-icons/fa";
+import FetchData from "@/helpers/FetchData";
 
 interface CachedData {
   header: typeHeader[];
 }
 
 const Advocacy = () => {
-  const [cachedData, setCachedData] = useState<any>(null);
-  const targetSlug = "our-advocacy";
+  const {cachedData} = FetchData(["advocacy","header"])
+  const targetSlug = "our-advocacy";[]
   const press_menu = useRef<any>();
   const pressCentreItem = (cachedData as CachedData)?.header?.find(
     (item: typeHeader) => item?.slug_en === targetSlug
   );
+  
   const altMenuItems = pressCentreItem ? pressCentreItem?.alt_menu : [];
-
-  useEffect(() => {
-    const cachedData = sessionStorage.getItem("myCacheKey");
-    if (cachedData) {
-      setCachedData(JSON.parse(cachedData)?.data);
-    } else {
-      Get()?.then((res) => {
-        sessionStorage.setItem("myCacheKey", JSON.stringify(res));
-        setCachedData(res?.advocacy);
-      });
-    }
-  }, []);
 
   const openPressMenu = () => {
     press_menu?.current?.classList?.toggle("hidden");

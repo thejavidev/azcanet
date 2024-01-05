@@ -1,4 +1,4 @@
-
+import { setSession } from "@/helpers/utils";
 import { apiFetch } from "@/types/apiType";
 
 let cache: { timestamp: number; data: apiFetch } | null = null;
@@ -33,11 +33,7 @@ export const Get = async () => {
   }
 
   // Elde edilen veriyi önbelleğe ekle
-  sessionStorage.setItem(
-    cacheKey,
-    JSON.stringify({ data: jsonData, timestamp: currentTime })
-  );
+  setSession(cacheKey, jsonData);
 
   return jsonData;
 };
-

@@ -1,19 +1,19 @@
 "use client";
 import Spinner from "@/components/Spiner/Spiner";
-import { Get } from "@/services/fetchServices";
 import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef } from "react";
 import TwitterTimeLine from "./TwitterTimeLine";
 import { typeHeader } from "@/types/apiType";
 import { FaAngleDown } from "react-icons/fa";
 import Link from "next/link";
+import FetchData from "@/helpers/FetchData";
 
 interface CachedData {
   header: typeHeader[];
 }
 
 const Press: React.FC = () => {
-  const [cachedData, setCachedData] = useState<any>(null);
+  const { cachedData } = FetchData(["press", "header"]);
   const twitter = useRef<any>();
   const targetSlug = "press-centre";
   const press_menu = useRef<any>();
@@ -23,16 +23,6 @@ const Press: React.FC = () => {
   const altMenuItems = pressCentreItem ? pressCentreItem?.alt_menu : [];
 
   useEffect(() => {
-    const cachedData = sessionStorage.getItem("myCacheKey");
-    if (cachedData) {
-      setCachedData(JSON.parse(cachedData)?.data);
-    } else {
-      Get()?.then((res) => {
-        sessionStorage.setItem("myCacheKey", JSON.stringify(res));
-        setCachedData(res?.press);
-      });
-    }
-
     setTimeout(() => {
       twitter?.current?.classList?.add("hidden");
     }, 2500);
