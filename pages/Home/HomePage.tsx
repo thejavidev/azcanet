@@ -7,6 +7,7 @@ import Mission from "@/components/HomePage/Mission/Mission";
 import Advocacy from "@/components/Advocacy/Advocacy";
 
 const HomePage = () => {
+  
   return (
     <>
       <Carousel />

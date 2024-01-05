@@ -13,7 +13,7 @@ const Carousel = () => {
     const cachedData = sessionStorage.getItem('myCacheKey');
     if (cachedData) {
       setCachedData(JSON.parse(cachedData)?.data?.banner);
-    
+      console.log('test', JSON.parse(cachedData))
     } else {
       Get().then((res) => {
         sessionStorage.setItem("myCacheKey", JSON.stringify(res));
