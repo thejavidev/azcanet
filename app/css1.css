@@ -20,6 +20,9 @@ body{
 ::-webkit-scrollbar-track {
     background: #fff;
 }
+.bg-overlay{
+  background-color: rgba(25, 25, 25, 0.75);
+}
 @media screen and (min-width:1299px) {
     .nav_item:hover .alt_item {
         opacity: 1;

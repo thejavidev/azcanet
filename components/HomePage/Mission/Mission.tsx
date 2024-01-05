@@ -6,6 +6,7 @@ import { FaAngleRight } from "react-icons/fa";
 
 const Mission = () => {
   const { cachedData } = FetchData(["involve"]);
+  
 
   return (
     <>
