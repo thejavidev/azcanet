@@ -1,7 +1,9 @@
 .tran {
     transition: .5s;
 }
-
+body{
+  overflow-x: hidden;
+}
 .tl {
     transition: .2s linear
 }

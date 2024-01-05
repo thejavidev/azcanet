@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @import "../styles/banner.css";
 
 @import url('./css1.css');

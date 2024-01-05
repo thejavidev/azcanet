@@ -1,21 +1,18 @@
-"use client";
-import Spinner from "@/components/Spiner/Spiner";
+"use client"
 import { Get } from "@/services/fetchServices";
-import Image from "next/image";
-import React, { useEffect, useRef, useState } from "react";
-import TwitterTimeLine from "./TwitterTimeLine";
 import { typeHeader } from "@/types/apiType";
-import { FaAngleDown } from "react-icons/fa";
+import Image from "next/image";
 import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
+import { FaAngleDown } from "react-icons/fa";
 
 interface CachedData {
   header: typeHeader[];
 }
 
-const Press: React.FC = () => {
+const Advocacy = () => {
   const [cachedData, setCachedData] = useState<any>(null);
-  const twitter = useRef<any>();
-  const targetSlug = "press-centre";
+  const targetSlug = "our-advocacy";
   const press_menu = useRef<any>();
   const pressCentreItem = (cachedData as CachedData)?.header.find(
     (item: typeHeader) => item?.slug_en === targetSlug
@@ -29,56 +26,63 @@ const Press: React.FC = () => {
     } else {
       Get()?.then((res) => {
         sessionStorage.setItem("myCacheKey", JSON.stringify(res));
-        setCachedData(res?.press);
+        setCachedData(res?.advocacy);
       });
     }
-
-    setTimeout(() => {
-      twitter?.current?.classList?.add("hidden");
-    }, 2500);
   }, []);
 
   const openPressMenu = () => {
     press_menu?.current?.classList?.toggle("hidden");
   };
-
   return (
     <>
-      <div className="grid grid-cols-12 gap-5 px-[50px] py-[50px] lg:py-[20px] lg:px-[20px]">
-        <div className="col-span-9  relative lg:col-span-12">
+      <div className="md:pt-5">
+        <div className="relative">
           <Image
-            src={cachedData?.press?.src || "/azcanet.jpg"}
+            src={cachedData?.advocacy?.src || "/azcanet.jpg"}
             width={1000}
             height={400}
-            alt="press banner"
-            className="!w-full h-[650px] object-cover lg:h-[400px]"
+            alt="involve banner"
+            className="!w-full h-[650px] object-cover lg:h-[400px] md:hidden"
           />
-          <div className="absolute w-[50%] lg:w-full bottom-[50px] lg:left-2 left-[50px] text-white">
-            <h2 className="font-bold text-[22px] ">
-              {cachedData?.press?.title_1_en}
+          <div className="hidden md:block ">
+            <Image
+              src={cachedData?.advocacy?.src_mobile || "/azcanet.jpg"}
+              width={1000}
+              height={400}
+              alt="involve banner"
+              className="!w-full h-[650px] object-cover lg:h-[400px]   "
+            />
+          </div>
+          <div className="absolute w-[40%] md:w-full lg:w-full top-[50%] flex justify-end  flex-col right-[0%] lg:px-[30px]  md:mt-5 md:mb-5 translate-x-[0%] md:static translate-y-[-50%] md:translate-y-[0] text-black md:px-[30px]">
+            <span className="font-normal  text-[24px] lg:text-[18px]">
+              {cachedData?.advocacy?.title_1_en}
+            </span>
+            <h2 className="font-bold text-4xl mt-2 lg:text-xl">
+              {cachedData?.advocacy?.title_2_en}
             </h2>
             <p
-              className="font-[400] text-[15px]  py-[1rem]"
+              className="font-[400] text-[15px]  py-[1rem] mt-3 "
               dangerouslySetInnerHTML={{
-                __html: cachedData && cachedData?.press?.text_en,
+                __html: cachedData && cachedData?.advocacy?.text_en,
               }}
             ></p>
             <div className="relative ">
               <div
                 onClick={openPressMenu}
-                className="flex items-center gap-3 bg-[#ec5a44] w-fit px-2 py-3 cursor-pointer rounded-lg"
+                className="flex items-center gap-3 bg-[#ec5a44] w-fit px-2 py-3 cursor-pointer rounded-lg text-white"
               >
-                <h1 className=" text-[16px] uppercase  font-semibold">
-                  Our Statements
+                <h1 className=" text-[16px] uppercase  font-semibold ">
+                  take action
                 </h1>
                 <FaAngleDown />
               </div>
               <ul
                 ref={press_menu}
-                className="absolute bottom-[50px] left-0 right-0 bg-white w-fit hidden transition-all "
+                className="absolute bottom-[-125px] left-0 right-0 bg-white w-fit hidden transition-all "
               >
                 {altMenuItems &&
-                  altMenuItems?.map((item, i) => (
+                  altMenuItems?.map((item: any, i: number) => (
                     <li
                       className="text-black cursor-pointer hover:bg-[#ec5a44] w-full  h-full flex  transition-all hover:text-white"
                       key={i}
@@ -95,18 +99,9 @@ const Press: React.FC = () => {
             </div>
           </div>
         </div>
-        <div className="col-span-3 lg:col-span-12  relative h-[650px]  overflow-hidden border-[1px] rounded-[12px]">
-          <div
-            ref={twitter}
-            className="absolute top-[50%] left-[50%] text-[20px] text-black font-bold translate-x-[-50%] translate-y-[-50%] bg-[#fff] z-[30] w-full h-full flex items-center justify-center"
-          >
-            <Spinner count={10} />
-          </div>
-          <TwitterTimeLine />
-        </div>
       </div>
     </>
   );
 };
 
-export default Press;
+export default Advocacy;
