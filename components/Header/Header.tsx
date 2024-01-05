@@ -9,7 +9,8 @@ import { AiOutlineClose } from "react-icons/ai";
 import FetchData from "@/helpers/FetchData";
 
 const Header = () => {
-  const {cachedData} = FetchData(["header"])
+  const {cachedData} = FetchData(["header","navbar_colors"])
+ 
 
   const [isMobile, setIsMobile] = useState(false);
   const [openSubCategory, setOpenSubCategory] = useState<string | null>(null);
@@ -48,7 +49,7 @@ const Header = () => {
 
   const mobileSupport = isMobile
     ? ""
-    : cachedData?.options?.navbar_colors?.navbar_btn;
+    : cachedData?.navbar_colors?.navbar_btn;
 
   return (
     <>
