@@ -1,24 +1,12 @@
-"use client"
-import { Get } from "@/services/fetchServices";
-import React, { useEffect, useState } from "react";
+"use client";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
 import Link from "next/link";
+import FetchData from "@/helpers/FetchData";
 
 const Media = () => {
-  const [cachedData, setCachedData] = useState<any>(null);
-  useEffect(() => {
-    const cachedData = sessionStorage.getItem("myCacheKey");
-    if (cachedData) {
-      setCachedData(JSON.parse(cachedData)?.data);
-    } else {
-      Get()?.then((res) => {
-        sessionStorage.setItem("myCacheKey", JSON.stringify(res));
-        setCachedData(res?.media);
-      });
-    }
-  }, []);
+  const { cachedData } = FetchData(["media"]);
 
   return (
     <>
