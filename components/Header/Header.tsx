@@ -93,18 +93,24 @@ const Header = () => {
                     onClick={() => openAltMenu(item?.alt_menu)}
                     className={` nav_item flex gap-2 xl:gap-0  h-full  cursor-pointer  xl:transition-all xl:ease-out     tl  items-center justify-center text-lg font-semibold text-[#fff] border-[1px] border-solid border-transparent  relative z-[250]  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px] xl:flex-col xl:items-start`}
                   >
-                    <Link
-                      href={item?.alt_menu?.length > 0 ? "" : item?.slug_en}
-                      className="w-full h-full  p-[8px] uppercase bg-[#ec5a44] xl:bg-transparent rounded-md"
-                    >
-                      <div className="flex items-center">
-                        <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
-                          {item?.menu_en}
-                        </h1>
-                        {item?.alt_menu?.length > 0 && (
+                    <div className="w-full h-full  p-[8px] uppercase bg-[#ec5a44] xl:bg-transparent rounded-md">
+                      {item?.alt_menu?.length > 0 ? (
+                        <div className="flex items-center">
+                          <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
+                            {item?.menu_en}
+                          </h1>
                           <FaAngleDown className={`xl:text-[#ec5a44] `} />
-                        )}
-                      </div>
+                        </div>
+                      ) : (
+                        <Link
+                          href={item?.slug_en}
+                          className="flex items-center"
+                        >
+                          <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
+                            {item?.menu_en}
+                          </h1>
+                        </Link>
+                      )}
                       {item?.alt_menu && item?.alt_menu?.length > 0 && (
                         <ul
                           ref={alt_item}
@@ -116,17 +122,36 @@ const Header = () => {
                               : ""
                           }`}
                         >
-                          {item?.alt_menu?.map((item: any, i: number) => (
-                            <li
-                              key={i}
-                              className="text-[#4f4f4f] capitalize py-[14px] xl:py-[5px] hover:text-[#ec5a44] tl inline-block text-[14px]"
-                            >
-                              <Link href={item?.slug_en}>{item?.menu_en}</Link>
-                            </li>
-                          ))}
+                          {item?.alt_menu?.map((item: any, i: number) => {
+                            let hostName = "";
+                            if (item?.slug_en?.startsWith("https")) {
+                              let url = new URL(item?.slug_en);
+                              hostName = url.host;
+                            } else {
+                              hostName = window.location.host;
+                            }
+                            return (
+                              <li
+                                key={i}
+                                className="text-[#4f4f4f] capitalize  hover:text-[#ec5a44] tl inline-block text-[14px]"
+                              >
+                                <Link
+                                  className="py-[14px] xl:py-[5px] inline-block"
+                                  href={item?.slug_en}
+                                  target={
+                                    window.location.host !== hostName
+                                      ? "_blank"
+                                      : ""
+                                  }
+                                >
+                                  {item?.menu_en}
+                                </Link>
+                              </li>
+                            );
+                          })}
                         </ul>
                       )}
-                    </Link>
+                    </div>
                   </li>
                 ))}
               <li className="flex gap-2 h-full p-[8px] cursor-pointer  uppercase bg-[#ec5a44] rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid border-transparent  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px]">
