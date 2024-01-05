@@ -1,5 +1,4 @@
 "use client";
-import { Get } from "@/services/fetchServices";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useRef, useState } from "react";
@@ -7,28 +6,19 @@ import { FaAngleDown } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { RiMenu3Fill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
+import FetchData from "@/helpers/FetchData";
 
 const Header = () => {
+  const {cachedData} = FetchData(["header"])
+
   const [isMobile, setIsMobile] = useState(false);
   const [openSubCategory, setOpenSubCategory] = useState<string | null>(null);
   const menu = useRef<any>();
   const alt_item = useRef<any>();
   const opacityLi = useRef<any>();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [cachedData, setCachedData] = useState<any>(null);
-  const [show, setShow] = useState(true);
-  const [lastScrollY, setLastScrollY] = useState(0);
 
   useEffect(() => {
-    const cachedData = sessionStorage.getItem("myCacheKey");
-    if (cachedData) {
-      setCachedData(JSON.parse(cachedData)?.data);
-    } else {
-      Get().then((res) => {
-        sessionStorage.setItem("myCacheKey", JSON.stringify(res));
-        setCachedData(res);
-      });
-    }
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1299);
     };

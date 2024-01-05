@@ -1,23 +1,11 @@
-"use client"
-import { Get } from "@/services/fetchServices";
+"use client";
+import FetchData from "@/helpers/FetchData";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
 import { FaAngleRight } from "react-icons/fa";
 
 const Mission = () => {
-  const [cachedData, setCachedData] = useState<any>(null);
-  useEffect(() => {
-    const cachedData = sessionStorage.getItem("myCacheKey");
-    if (cachedData) {
-      setCachedData(JSON.parse(cachedData)?.data);
-    } else {
-      Get()?.then((res) => {
-        sessionStorage.setItem("myCacheKey", JSON.stringify(res));
-        setCachedData(res?.involve);
-      });
-    }
-  }, []);
+  const { cachedData } = FetchData(["involve"]);
 
   return (
     <>
