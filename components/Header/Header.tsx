@@ -95,7 +95,7 @@ const Header = () => {
                   >
                     <Link
                       href={item?.alt_menu?.length > 0 ? "" : item?.slug_en}
-                      className="w-full h-full  p-[8px] uppercase bg-[#ec5a44] rounded-md"
+                      className="w-full h-full  p-[8px] uppercase bg-[#ec5a44] xl:bg-transparent rounded-md"
                     >
                       <div className="flex items-center">
                         <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
