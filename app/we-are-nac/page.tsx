@@ -18,6 +18,15 @@ const page = () => {
         url={section_2?.section_two_src}
         bg={section_2?.section_two_bg}
       />
+
+      <About
+        title={section_3_4?.section_three_title_1_en}
+        title2={section_3_4?.section_four_title_1_en}
+        text={section_3_4?.section_three_text_en}
+        text2={section_3_4?.section_four_text_en}
+        url={section_3_4?.section_three_src}
+        bg={section_3_4?.section_three_bg}
+      />
       <SomeMoments />
       <WhatCanYou />
     </>
