@@ -1,19 +1,22 @@
 "use client";
 import FetchData from "@/helpers/FetchData";
 import Image from "next/image";
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { FaPlay } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 
 const NOA = () => {
   const { cachedData } = FetchData(["who"]);
   const openM = useRef<any>();
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => {
     openM?.current?.classList?.remove("hidden");
+    setIsModalOpen(true);
   };
   const closeModal = () => {
     openM?.current?.classList?.add("hidden");
+    setIsModalOpen(false);
   };
 
   const counter = [
@@ -39,7 +42,7 @@ const NOA = () => {
 
   return (
     <>
-      <div className="relative mt-10 px-[100px]">
+      <div className="relative mt-10 mb-16 px-[100px]">
         <div className="grid grid-cols-12 gap-4">
           <div className="col-span-6  relative ">
             <Image
@@ -60,7 +63,8 @@ const NOA = () => {
             >
               <FaPlay className="text-[35px]" />
             </span>
-            <div ref={openM} className="hidden relative">
+            
+            <div ref={openM} className={`hidden relative ${isModalOpen ? "fadeInNoa" : "fadeOutNoa"}`}>
               <div
                 onClick={closeModal}
                 className="fixed top-0 left-0 right-0 w-full h-screen bg-overlay z-[1150] "
