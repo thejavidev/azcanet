@@ -12,7 +12,7 @@ interface CachedData {
 
 const Advocacy = () => {
   const {cachedData} = FetchData(["advocacy","header"])
-  const targetSlug = "our-advocacy";[]
+  const targetSlug = "our-advocacy";
   const press_menu = useRef<any>();
   const pressCentreItem = (cachedData as CachedData)?.header?.find(
     (item: typeHeader) => item?.slug_en === targetSlug
