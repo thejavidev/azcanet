@@ -63,8 +63,13 @@ const NOA = () => {
             >
               <FaPlay className="text-[35px]" />
             </span>
-            
-            <div ref={openM} className={`hidden relative ${isModalOpen ? "fadeInNoa" : "fadeOutNoa"}`}>
+
+            <div
+              ref={openM}
+              className={`hidden relative ${
+                isModalOpen ? "fadeInNoa" : "fadeOutNoa"
+              }`}
+            >
               <div
                 onClick={closeModal}
                 className="fixed top-0 left-0 right-0 w-full h-screen bg-overlay z-[1150] "

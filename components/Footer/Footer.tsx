@@ -3,13 +3,25 @@ import { typeHeader } from "@/types/apiType";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
+import {
+  FaFacebook,
+  FaInstagramSquare,
+  FaTwitter,
+  FaYoutube,
+  FaLinkedin,
+} from "react-icons/fa";
 
 interface CachedData {
   header: typeHeader[];
 }
 
 const Footer = () => {
-  const { cachedData } = FetchData(["footer_bg", "header", "headerlogo_white"]);
+  const { cachedData } = FetchData([
+    "footer_bg",
+    "header",
+    "headerlogo_white",
+    "options",
+  ]);
 
   const getAltMenuItems = (slug: string, cachedData: CachedData) => {
     const item = (cachedData as CachedData)?.header?.find(
@@ -24,29 +36,59 @@ const Footer = () => {
   const altMenuadvocacyItems = getAltMenuItems(advocacy, cachedData);
   const altMenupressItems = getAltMenuItems(press, cachedData);
 
-
-  const contact =[
+  const contact = [
     {
-        id:1,
-        name:'contact',
+      id: 1,
+      name: "contact",
     },
     {
-        id:2,
-        name:"Email",
-        mail:"info@azcanet.ca"
+      id: 2,
+      name: "Email",
+      mail: `${cachedData?.options?.sosials?.email}`,
     },
     {
-        id:3,
-        name:"Address",
-        adres:"676 Westburne Dr Unit 3, Vaughan, ON",
-        link:"https://goo.gl/maps/GTrUeYcBX3uutQeC6"
-    }
-  ]
+      id: 3,
+      name: "Address",
+      adres: `${cachedData?.options?.sosials?.unvan_en}`,
+      link: `${cachedData?.options?.sosials?.map}`,
+    },
+    {
+      id: 4,
+      sosicals: [
+        {
+          id: 1,
+          icon: <FaFacebook />,
+          link: `${cachedData?.options?.sosials?.facebook}`,
+        },
+        {
+          id: 2,
+          icon: <FaInstagramSquare />,
+          link: `${cachedData?.options?.sosials?.instagram}`,
+        },
+        {
+          id: 3,
+          icon: <FaTwitter />,
+          link: `${cachedData?.options?.sosials?.twitter}`,
+        },
+        {
+          id: 4,
+          icon: <FaYoutube />,
+          link: `${cachedData?.options?.sosials?.youtube}`,
+        },
+        {
+          id: 5,
+          icon: <FaLinkedin />,
+          link: `${cachedData?.options?.sosials?.linkedin}`,
+        },
+      ],
+    },
+  ];
+  const year = new Date().getFullYear();
 
   return (
     <>
       <footer
-        className={`relative bg-center  before:content-[''] before:top-0 before:left-0 before:absolute before:w-full before:h-full before:-z-[1] before:bg-[#ec5a44]
+        className={`relative bg-center mt-8  before:content-[''] before:top-0 before:left-0 before:absolute before:w-full before:h-full before:-z-[1] before:bg-[#ec5a44]
        bg-no-repeat bg-cover`}
         style={{ backgroundImage: `url(${cachedData?.footer_bg})` }}
       >
@@ -68,7 +110,7 @@ const Footer = () => {
           </div>
           <div className="col-span-3  ">
             <Link
-              className="p-[10px] text-[25px] text-white capitalize mb-2 inline-block"
+              className="text-[25px] text-white capitalize mb-2 inline-block"
               href="/we-are-nac"
             >
               we are nac
@@ -86,7 +128,7 @@ const Footer = () => {
                   return (
                     <li key={i}>
                       <Link
-                        className="text-white p-[10px] text-[18px]"
+                        className="text-white py-[10px] text-[18px]"
                         href={item?.slug_en ? item?.slug_en : ""}
                         target={
                           window.location.host !== hostName ? "_blank" : ""
@@ -117,24 +159,69 @@ const Footer = () => {
             </ul>
           </div>
           <div className="col-span-3 ">
-            <ul className="flex flex-col gap-4">
-              <li>
-                <Link href="/contact">contact</Link>
-              </li>
-              <li>
-                <a href="mailto:info@azcanet.ca">
-                  email : <span>info@azcanet.ca</span>
-                </a>
-              </li>
-              <li>
-                <a href="mailto:info@azcanet.ca" target="_blank">
-                  Adress :
-                  <span>676 Westburne Dr Unit 3, Vaughan, ON L4K 4V5</span>
-                </a>
-              </li>
+            <ul className="flex flex-col gap-4 ">
+              {contact &&
+                contact?.map((cur, i) => (
+                  <li
+                    key={i}
+                    className="flex items-center gap-3 text-white text-md"
+                  >
+                    {(cur?.id === 1 || cur?.id === 2 || cur?.id === 3) && (
+                      <h3 className="capitalize">
+                        {cur?.name}
+                        {cur?.id === 2 && <span className="pl-3">:</span>}
+                      </h3>
+                    )}
+                    {cur?.id === 2 && (
+                      <a href={`mailto:${cur?.mail}`}>{cur?.mail}</a>
+                    )}
+                    {cur?.id === 3 && (
+                      <a href={`${cur?.link}`} target="_blank">
+                        {cur?.adres}
+                      </a>
+                    )}
+                    {cur?.id === 4 && (
+                      <li>
+                        <ul className="flex items-center gap-3  ">
+                          {cur?.sosicals?.map((item, i) => (
+                            <li key={i} className="text-white text-[25px]">
+                              <a
+                                href={item?.link}
+                                className="inline-block"
+                                target="_blank"
+                              >
+                                {item?.icon}
+                              </a>
+                            </li>
+                          ))}
+                        </ul>
+                      </li>
+                    )}
+                  </li>
+                ))}
             </ul>
-            <ul></ul>
           </div>
+        </div>
+        <div className="flex justify-between w-full items-center py-[15px] px-[100px]">
+          <h2 className="text-white text-lg">
+            All rights reserved © <span>{year}</span>
+          </h2>
+          <h2>
+            <a
+              href="https://shamans.az/"
+              target="_blank"
+              className="flex items-center gap-1 text-white text-xl"
+            >
+              Website by
+              <img
+                src={`${cachedData?.options?.sosials?.shamans}`}
+                width={100}
+                height={100}
+                alt="shamans"
+                className="w-[25px] h-[25px] object-contain"
+              />
+            </a>
+          </h2>
         </div>
       </footer>
     </>
