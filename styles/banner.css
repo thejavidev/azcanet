@@ -54,6 +54,28 @@
   width: 50%;
 }
 
+.wrapper {
+  padding: 0 150px;
+}
+
+.tab-content :is(h1, h2, h3, h4, h5, h6) {
+  position: relative;
+  font-size: 24px;
+  color: #212529;
+  font-weight: 700;
+  padding: 0 0 0 20px;
+  margin-top: 30px;
+}
+
+.tab-content :where(h1, h2, h3, h4, h5, h6)::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 8px;
+  background: #ec5a44;
+  left: 0;
+}
+
 @media (max-width: 1299px) {
   .slider-content {
     width: 80%;
