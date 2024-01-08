@@ -1,4 +1,5 @@
 "use client";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import NOA from "@/components/WeAreNac/NOA";
 import SomeMoments from "@/components/WeAreNac/SomeMoments";
 import WhatCanYou from "@/components/WeAreNac/WhatCanYou";
@@ -9,8 +10,21 @@ const page = () => {
   const { cachedData } = FetchData(["who"]);
   const section_2 = cachedData?.who?.section_2;
   const section_3_4 = cachedData?.who?.section_3_4;
+  
+  const pageNames =[
+    {
+      name:"Home page",
+      link:"/"
+    },
+    {
+      name:'We are nac',
+      link:"#"
+    }
+  ]
+
   return (
     <>
+    <Breadcrumb pageNames={pageNames} />
       <NOA />
       <About
         title={section_2?.section_two_title_1_en}
