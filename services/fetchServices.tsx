@@ -20,20 +20,27 @@ export const Get = async () => {
     }
   }
 
-  // Eğer önbellekte veri yoksa veya refetchOnmount true ise, yeni bir istek yap
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API}`);
-  const jsonData = await res.json();
+  try {
+    // Eğer önbellekte veri yoksa veya refetchOnmount true ise, yeni bir istek yap
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API}`);
+    const jsonData = await res.json();
 
-  // Eğer önbellekteki veri aynıysa, tekrar yükleme yapmadan mevcut veriyi döndür
-  if (
-    cachedData &&
-    JSON.stringify(jsonData) === JSON.stringify(JSON.parse(cachedData))
-  ) {
-    return JSON.parse(cachedData);
+    // Eğer önbellekteki veri aynıysa, tekrar yükleme yapmadan mevcut veriyi döndür
+    if (
+      cachedData &&
+      JSON.stringify(jsonData) === JSON.stringify(JSON.parse(cachedData))
+    ) {
+      return JSON.parse(cachedData);
+    }
+
+    // Elde edilen veriyi önbelleğe ekle
+    setSession(cacheKey, jsonData);
+
+    return jsonData;
+  } catch (error) {
+    console.error("Error fetching data:", error);
+
+    // Return a placeholder value indicating that the data couldn't be fetched
+    return { error: "Data couldn't be fetched" };
   }
-
-  // Elde edilen veriyi önbelleğe ekle
-  setSession(cacheKey, jsonData);
-
-  return jsonData;
 };
