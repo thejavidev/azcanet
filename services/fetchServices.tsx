@@ -9,6 +9,7 @@ export const Get = async () => {
 
   const cacheKey = "myCacheKey";
   const cachedData = sessionStorage.getItem(cacheKey);
+  
   const currentTime = new Date().getTime();
 
   if (cachedData && !refetchOnmount) {
