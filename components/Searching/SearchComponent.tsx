@@ -22,9 +22,9 @@ const SearchComponent = () => {
       let a = cachedData?.[name];
       if (a) {
         if (Array.isArray(a)) {
-          a.map((item) => setApi((prev): any => [...prev, item]));
+          a.map((item) => setApi((prev): any => [...prev, { [name]: item }]));
         } else {
-          setApi((prev): any => [...prev, a]);
+          setApi((prev): any => [...prev, { [name]: a }]);
         }
       }
     }
@@ -43,15 +43,24 @@ const SearchComponent = () => {
       setResults(api);
     }
   };
-
   useEffect(() => {
-    let filterData = api?.filter((i: any) =>
-      i?.title_en
-        ? i?.title_en?.toLowerCase()?.includes(input)
-        : i?.title_1_en?.toLowerCase()?.includes(input)
-    );
+    let filterData = api?.filter((i: any) => {
+      const values = Object.values(i);
+
+      // Hər bir dəyər üçün axtarışı yerinə yetir
+      const found = values.some((value: any) =>
+        value?.title_en
+          ? value?.title_en?.toLowerCase()?.includes(input)
+          : value?.title_1_en?.toLowerCase()?.includes(input)
+      );
+
+      return found;
+    });
 
     filterData?.length > 0 && setResults(filterData);
+
+    console.log(filterData);
+    // console.log(results);
   }, [input]);
 
   return (
@@ -66,22 +75,20 @@ const SearchComponent = () => {
           onChange={handleChange}
           required
         />
-        {results.map((result: any, index) => {
-          return (
-            <div className="results" key={index}>
-              {result?.title_en && (
-                <h2>
-                  {index} -- {result?.title_en}
-                </h2>
-              )}
-              {result?.title_1_en && (
-                <h2>
-                  {index} -- {result?.title_1_en}
-                </h2>
-              )}
-            </div>
-          );
-        })}
+        {results.map((result: any, index) => (
+          <div key={index}>
+            {Object.keys(result).map((key) => {
+              const value: any = result[key];
+              const title = value?.title_en || value?.title_1_en;
+              
+              return (
+                <p key={key}>
+                  {key}: {title}
+                </p>
+              );
+            })}
+          </div>
+        ))}
       </div>
     </>
   );
