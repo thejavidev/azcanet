@@ -1,3 +1,4 @@
+"use client"
 import FetchData from "@/helpers/FetchData";
 import { typeHeader } from "@/types/apiType";
 import Image from "next/image";
@@ -27,7 +28,7 @@ const Footer = () => {
     const item = (cachedData as CachedData)?.header?.find(
       (item: typeHeader) => item?.slug_en === slug
     );
-    return item ? item.alt_menu : [];
+    return item ? item?.alt_menu : [];
   };
 
   const advocacy = "our-advocacy";
@@ -92,25 +93,25 @@ const Footer = () => {
        bg-no-repeat bg-cover`}
         style={{ backgroundImage: `url(${cachedData?.footer_bg})` }}
       >
-        <div className="grid grid-cols-12 gap-5 px-[100px] py-[30px]">
-          <div className="col-span-3 ">
+        <div className="grid grid-cols-12 gap-5 xl:gap-2 px-[100px] xl:px-[50px] py-[30px] md:px-[20px]">
+          <div className="col-span-3 lg:col-span-6 md:col-span-12 md:mb-2">
             <Link href="/" className="inline-block">
               <Image
                 src={
                   cachedData?.headerlogo_white
                     ? cachedData?.headerlogo_white
-                    : ""
+                    : "/notfound.webp"
                 }
-                className="w-[200px]"
+                className="w-[200px] xl:w-[150px]"
                 width={1000}
                 height={100}
                 alt="azcanet.ca"
               />
             </Link>
           </div>
-          <div className="col-span-3  ">
+          <div className="col-span-3  lg:col-span-6 lg:mb-3 md:col-span-12">
             <Link
-              className="text-[25px] text-white capitalize mb-2 inline-block"
+              className="text-[25px] xl:text-[20px] md:text-[16px] text-white capitalize mb-2 inline-block"
               href="/we-are-nac"
             >
               we are nac
@@ -128,7 +129,7 @@ const Footer = () => {
                   return (
                     <li key={i}>
                       <Link
-                        className="text-white py-[10px] text-[18px]"
+                        className="text-white py-[10px] text-[18px] md:text-[16px]"
                         href={item?.slug_en ? item?.slug_en : ""}
                         target={
                           window.location.host !== hostName ? "_blank" : ""
@@ -141,14 +142,14 @@ const Footer = () => {
                 })}
             </ul>
           </div>
-          <div className="col-span-3 ">
+          <div className="col-span-3 lg:col-span-6 md:col-span-12 md:mb-4">
             <ul className="flex flex-col gap-4">
               {altMenupressItems &&
                 altMenupressItems?.map((item, i) => {
                   return (
                     <li key={i}>
                       <Link
-                        className="text-white p-[10px] text-[18px]"
+                        className="text-white p-[10px] md:py-[5px] md:px-0 text-[18px] md:text-[16px]"
                         href={item?.slug_en ? item?.slug_en : ""}
                       >
                         {item?.menu_en}
@@ -158,36 +159,44 @@ const Footer = () => {
                 })}
             </ul>
           </div>
-          <div className="col-span-3 ">
+          <div className="col-span-3 lg:col-span-6 md:col-span-12">
             <ul className="flex flex-col gap-4 ">
               {contact &&
                 contact?.map((cur, i) => (
                   <li
                     key={i}
-                    className="flex items-center gap-3 text-white text-md"
+                    className="flex items-start md:items-center gap-3 text-white text-md"
                   >
                     {(cur?.id === 1 || cur?.id === 2 || cur?.id === 3) && (
                       <h3 className="capitalize">
                         {cur?.name}
-                        {cur?.id === 2 && <span className="pl-3">:</span>}
+                        {(cur?.id === 2 || cur?.id === 3) && (
+                          <span className="pl-3">:</span>
+                        )}
                       </h3>
                     )}
                     {cur?.id === 2 && (
-                      <a href={`mailto:${cur?.mail}`}>{cur?.mail}</a>
+                      <a className="text-sm" href={`mailto:${cur?.mail}`}>
+                        {cur?.mail}
+                      </a>
                     )}
                     {cur?.id === 3 && (
-                      <a href={`${cur?.link}`} target="_blank">
+                      <a
+                        href={`${cur?.link}`}
+                        className="text-sm columns-2 md:columns-1"
+                        target="_blank"
+                      >
                         {cur?.adres}
                       </a>
                     )}
                     {cur?.id === 4 && (
-                      <li>
+                      <div>
                         <ul className="flex items-center gap-3  ">
                           {cur?.sosicals?.map((item, i) => (
                             <li key={i} className="text-white text-[25px]">
                               <a
                                 href={item?.link}
-                                className="inline-block"
+                                className="inline-block md:text-[20px]"
                                 target="_blank"
                               >
                                 {item?.icon}
@@ -195,22 +204,22 @@ const Footer = () => {
                             </li>
                           ))}
                         </ul>
-                      </li>
+                      </div>
                     )}
                   </li>
                 ))}
             </ul>
           </div>
         </div>
-        <div className="flex justify-between w-full items-center py-[15px] px-[100px]">
-          <h2 className="text-white text-lg">
+        <div className="flex justify-between w-full items-center py-[15px] px-[100px] xl:px-[50px] md:px-[20px]">
+          <h2 className="text-white text-lg md:text-sm">
             All rights reserved © <span>{year}</span>
           </h2>
           <h2>
             <a
               href="https://shamans.az/"
               target="_blank"
-              className="flex items-center gap-1 text-white text-xl"
+              className="flex items-center gap-1 text-white text-xl  md:text-sm"
             >
               Website by
               <img

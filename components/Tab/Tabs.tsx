@@ -1,13 +1,30 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const Tabs = ({ children }: any) => {
   const [activeTab, setActiveTab] = useState(0);
+  const [fadeOutClass, setFadeOutClass] = useState("");
+  const [isOpen, setIsOpen] = useState("");
+
+
+
 
   const handleChangeTab = (i: any) => {
-    setActiveTab(i);
+    setFadeOutClass("fadeOutNoa");
+    setTimeout(() => {
+      setActiveTab(i);
+      setIsOpen(i);
+      setFadeOutClass("");
+    }, 300);
   };
+  useEffect(() => {
+    const timeoutId = setTimeout(() => {
+      setFadeOutClass("");
+    }, 300);
 
+    return () => clearTimeout(timeoutId);
+  }, [fadeOutClass]);
+ 
   return (
     <>
       <div className="flex justify-between items-center gap-[15px]">
@@ -20,13 +37,15 @@ const Tabs = ({ children }: any) => {
               activeTab === i
                 ? "font-[700] bg-[#ec5a44] text-white shadow-[0_4px_13px_rgba(236,90,68,.6),0_2px_3px_rgba(236,90,68,.41)]"
                 : "border bg-[#759acd] border-[#759acd] text-white  "
-            }`}
+            }
+              
+            `}
           >
-            {child?.props?.title}
+            {child?.props?.title} 
           </button>
         ))}
       </div>
-      <>{children?.[activeTab]}</>
+      <div className={`${isOpen} ${fadeOutClass}`}>{children?.[activeTab]}</div>
     </>
   );
 };

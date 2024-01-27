@@ -1,56 +1,93 @@
 "use client";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 import Tabs from "@/components/Tab/Tabs";
 import FetchData from "@/helpers/FetchData";
-import Link from "next/link";
-import React from "react";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
+import { motion as m } from "framer-motion";
+import { CopyNotification } from "@/components/CopyNotification/CopyNotification";
+import Share from "@/components/Share/Share";
 
 const page = () => {
-  const { cachedData } = FetchData(["currentIsusesCtg"]);
+  const { cachedData } = FetchData(["currentIsusesCtg", "currentIsuses"]);
+  const [showNotification, setShowNotification] = useState(false);
+  const [copiedLink, setCopiedLink] = useState("");
+  const pageNames = [
+    {
+      name: "Home page",
+      link: "/",
+    },
+    {
+      name: "current Isuses",
+      link: "#",
+    },
+  ];
+  useEffect(()=>{
+    window.scrollTo(0, 0)
+  },[])
 
+  const CopyLink = () => {
+    const link = window?.location?.href;
+    setCopiedLink(link);
+    setShowNotification(true);
+    navigator?.clipboard?.writeText(link);
+    setTimeout(() => {
+      setShowNotification(false);
+    }, 3000);
+  };
+  const notfoundImg = "/notfound.webp";
   return (
-    <div className="wrapper">
-      <div className="mt-[20px]">
-        <Tabs>
-          {cachedData?.currentIsusesCtg?.map((data: any) => (
-            <Tabs.Panel key={data?.id} title={data?.name_en}>
-              <div className="pt-[50px]">
-                <p
-                  className="font-[700] text-[35px] tracking-[0.7px] text-[#212529]"
-                  dangerouslySetInnerHTML={{ __html: data && data?.title_en }}
-                ></p>
-                <div
-                  className="tab-content"
-                  dangerouslySetInnerHTML={{ __html: data && data?.text_en }}
-                ></div>
-              </div>
-            </Tabs.Panel>
-          ))}
-        </Tabs>
-      </div>
-      <div className="flex gap-[30px] items-end mt-[30px]">
-        <p>Share:</p>
-        <div className="flex items-center gap-[10px]">
-          <Link
-            href="/"
-            className="uppercase border border-[#759acd] text-[#759acd] py-[8px] rounded-[5px] px-[12px] hover:bg-[#759acd] hover:text-white"
-          >
-            Facebook
-          </Link>
-          <Link
-            href="/"
-            className="uppercase border border-[#759acd] text-[#759acd] py-[8px] rounded-[5px] px-[12px] hover:bg-[#759acd] hover:text-white"
-          >
-            TWITTER
-          </Link>
-          <Link
-            href="/"
-            className="uppercase border border-[#59a683] text-[#59a683] py-[8px] rounded-[5px] px-[12px] hover:bg-[#59a683] hover:text-white"
-          >
-            copy LINK
-          </Link>
+    <>
+      <title>Azcanet.ca - Current Isuses</title>
+      <m.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        transition={{ duration: 0.75, ease: "easeOut" }}
+      >
+        <Breadcrumb pageNames={pageNames} />
+        <div className="">
+          <Image
+            src={
+              cachedData?.currentIsuses
+                ? cachedData?.currentIsuses
+                : notfoundImg
+            }
+            width={1000}
+            height={300}
+            alt=""
+            className="w-full h-[350px] object-cover"
+          />
         </div>
-      </div>
-    </div>
+
+        <div className="wrapper">
+          <div className="mt-[20px]">
+            <Tabs>
+              {cachedData?.currentIsusesCtg?.map((data: any) => (
+                <Tabs.Panel key={data?.id} title={data?.name_en}>
+                  <div className="pt-[50px]">
+                    <p
+                      className="font-[700] text-[35px] tracking-[0.7px] text-[#212529]"
+                      dangerouslySetInnerHTML={{
+                        __html: data && data?.title_en,
+                      }}
+                    ></p>
+                    <div
+                      className="tab-content"
+                      dangerouslySetInnerHTML={{
+                        __html: data && data?.text_en,
+                      }}
+                    ></div>
+                  </div>
+                </Tabs.Panel>
+              ))}
+            </Tabs>
+          </div>
+          <Share copyLink={CopyLink} />
+          {showNotification && <CopyNotification link={copiedLink} />}
+        </div>
+      </m.div>
+    </>
   );
 };
 
