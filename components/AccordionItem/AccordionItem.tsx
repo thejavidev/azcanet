@@ -1,0 +1,44 @@
+"use client";
+import React, { useState } from "react";
+import { CSSTransition } from "react-transition-group";
+import { FaPlus, FaMinus } from "react-icons/fa";
+// Bu dosya içinde animasyonun CSS kodları yer alacak
+
+const AccordionItem = ({ accordionItems }: any) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      {accordionItems &&
+        accordionItems?.map((item: any, i: number) => (
+          <div key={i} className="bg-[#adc4e6] font-normal rounded-lg">
+            <div
+              className="flex justify-between items-center p-5 cursor-pointer"
+              onClick={() => setIsOpen(!isOpen)}
+            >
+              <h2 className="font-semibold text-xl text-white">
+                {item?.option_title_en}
+              </h2>
+              <div>
+                {isOpen ? (
+                  <FaPlus className="h-5 w-5" />
+                ) : (
+                  <FaMinus className="h-5 w-5" />
+                )}
+              </div>
+            </div>
+            <CSSTransition
+              in={isOpen}
+              timeout={300}
+              classNames="fade"
+              unmountOnExit
+            >
+              <div className="p-5 text-md text-black">{item?.supportus_en}</div>
+            </CSSTransition>
+          </div>
+        ))}
+    </>
+  );
+};
+
+export default AccordionItem;

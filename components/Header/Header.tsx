@@ -9,8 +9,7 @@ import { AiOutlineClose } from "react-icons/ai";
 import FetchData from "@/helpers/FetchData";
 
 const Header = () => {
-  const {cachedData} = FetchData(["header","navbar_colors"])
- 
+  const { cachedData } = FetchData(["header", "navbar_colors"]);
 
   const [isMobile, setIsMobile] = useState(false);
   const [openSubCategory, setOpenSubCategory] = useState<string | null>(null);
@@ -47,9 +46,7 @@ const Header = () => {
     }
   };
 
-  const mobileSupport = isMobile
-    ? ""
-    : cachedData?.navbar_colors?.navbar_btn;
+  const mobileSupport = isMobile ? "" : cachedData?.navbar_colors?.navbar_btn;
 
   return (
     <>
@@ -114,13 +111,6 @@ const Header = () => {
                           }`}
                         >
                           {item?.alt_menu?.map((item: any, i: number) => {
-                            let hostName = "";
-                            if (item?.slug_en?.startsWith("https")) {
-                              let url = new URL(item?.slug_en);
-                              hostName = url.host;
-                            } else {
-                              hostName = window.location.host;
-                            }
                             return (
                               <li
                                 key={i}
@@ -128,12 +118,7 @@ const Header = () => {
                               >
                                 <Link
                                   className="py-[14px] xl:py-[5px] inline-block"
-                                  href={item?.slug_en}
-                                  target={
-                                    window.location.host !== hostName
-                                      ? "_blank"
-                                      : ""
-                                  }
+                                  href={`/${item?.slug_en}`}
                                 >
                                   {item?.menu_en}
                                 </Link>
@@ -160,7 +145,13 @@ const Header = () => {
                 }}
                 className={` flex gap-2 h-full  p-[8px] cursor-pointer   uppercase rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid border-transparent xl:items-start xl:justify-start xl:bg-transparent xl:text-[#ec5a44] 2xl:text-[13px] md:p-[4px]`}
               >
-                <span className="text-white xl:text-[#ec5a44]">support us</span>
+                <Link
+                  href="/supportus"
+                  target="_blank"
+                  className="text-white xl:text-[#ec5a44]"
+                >
+                  support us
+                </Link>
               </li>
             </ul>
             <div className="hidden xl:flex">
