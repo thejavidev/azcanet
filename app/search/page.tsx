@@ -1,6 +1,5 @@
 "use client";
 import FetchData from "@/helpers/FetchData";
-import { Get } from "@/services/fetchServices";
 import { useEffect, useState } from "react";
 import { motion as m } from "framer-motion";
 import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
@@ -18,8 +17,35 @@ const page = () => {
       link: "#",
     },
   ];
+  const apiName = [
+    "statements",
+    "volunter_nac",
+    "take",
+    "comunity",
+    "media",
+    "involve",
+    "press",
+  ];
+  const [api, setApi] = useState([]);
   const { cachedData } = FetchData(["options"]);
+  const searchApi = FetchData(apiName);
 
+  function pushData() {
+    for (const name of apiName) {
+      let a = searchApi?.cachedData?.[name];
+      if (a) {
+        if (Array.isArray(a)) {
+          a.map((item) => setApi((prev): any => [...prev, { [name]: item }]));
+        } else {
+          setApi((prev): any => [...prev, { [name]: a }]);
+        }
+      }
+    }
+  }
+
+  useEffect(() => {
+    pushData();
+  }, [cachedData]);
 
   return (
     <>
@@ -38,7 +64,7 @@ const page = () => {
             images={cachedData?.options?.search?.search_banner_src}
           />
         </div>
-        <SearchComponent />
+        <SearchComponent api={api} />
       </m.div>
     </>
   );
