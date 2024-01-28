@@ -1,6 +1,7 @@
 import FetchData from "@/helpers/FetchData";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
+import { useSearchParams} from "next/navigation";
 
 const SearchComponent = () => {
   const apiName = [
@@ -17,6 +18,10 @@ const SearchComponent = () => {
   const [input, setInput] = useState("");
   const [api, setApi] = useState([]);
   const [results, setResults] = useState([]);
+  const searchParams=useSearchParams()
+
+  const query =searchParams?.get('q') ;
+  
 
   function pushData() {
     for (const name of apiName) {
@@ -30,9 +35,11 @@ const SearchComponent = () => {
       }
     }
   }
+ 
 
   useEffect(() => {
     pushData();
+    setResults(api);
   }, [cachedData]);
 
   const handleChange = (e: any) => {
@@ -51,22 +58,20 @@ const SearchComponent = () => {
       // Hər bir dəyər üçün axtarışı yerinə yetir
       const found = values.some((value: any) =>
         value?.title_en
-          ? value?.title_en?.toLowerCase()?.includes(input)
-          : value?.title_1_en?.toLowerCase()?.includes(input)
+          ? value?.title_en?.toLowerCase()?.includes(query)
+          : value?.title_1_en?.toLowerCase()?.includes(query)
       );
 
       return found;
     });
 
     filterData?.length > 0 && setResults(filterData);
-
-    console.log(filterData);
-    // console.log(results);
-  }, [input]);
+  }, [cachedData]);
 
   return (
     <>
-      <div className="search">
+      <div className="px-[100px] py-[20px]">
+        <h2>{query}</h2>
         <input
           type="text"
           name="query"
@@ -75,22 +80,29 @@ const SearchComponent = () => {
           placeholder="Search"
           onChange={handleChange}
           required
+          className="border-[1px] border-[#ccc] px-[20px] py-[10px] w-full outline-none mb-4"
         />
+
         {results.map((result: any, index) => (
           <div key={index}>
             {Object.keys(result).map((key) => {
               const value: any = result[key];
               const title = value?.title_en || value?.title_1_en;
 
-              const charsToReplace = new RegExp(input);
+              const charsToReplace = new RegExp(query);
 
-              const newText = value?.intro_text_en?.replace(
-                charsToReplace,
-                `<span class="bg-red-600 text-white">${input}</span>`
-              );
+              const newText = value?.intro_text_en
+                ?.toLowerCase()
+                ?.replace(
+                  charsToReplace,
+                  `<span class="bg-red-600 text-white">${query}</span>`
+                );
 
               return (
-                <div key={key}>
+                <div
+                  key={key}
+                  className="border-2 px-[10px] mb-3 bg-[#f6f6f6] rounded-sm "
+                >
                   <div className="flex items-start flex-col gap-2">
                     <Link
                       className="underline hover:text-red-600 tl"

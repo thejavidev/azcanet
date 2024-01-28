@@ -172,3 +172,15 @@
   background-color: #ec5a44;
   color: #fff;
 }
+.inputSearch{
+  width: 0;
+  opacity: 0;
+}
+.openInput{
+  width: calc(100% - 250px);
+  opacity: 1;
+}
+.inputIcon{
+  visibility: hidden;
+  opacity: 0;
+}
