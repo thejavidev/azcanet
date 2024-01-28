@@ -1,4 +1,5 @@
 import FetchData from "@/helpers/FetchData";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 
 const SearchComponent = () => {
@@ -80,11 +81,29 @@ const SearchComponent = () => {
             {Object.keys(result).map((key) => {
               const value: any = result[key];
               const title = value?.title_en || value?.title_1_en;
-              
+
+              const charsToReplace = new RegExp(input);
+
+              const newText = value?.intro_text_en?.replace(
+                charsToReplace,
+                `<span class="bg-red-600 text-white">${input}</span>`
+              );
+
               return (
-                <p key={key}>
-                  {key}: {title}
-                </p>
+                <div key={key}>
+                  <div className="flex items-start flex-col gap-2">
+                    <Link
+                      className="underline hover:text-red-600 tl"
+                      href={`${key}/${value?.slug_en}`}
+                    >
+                      {title}
+                    </Link>
+                    <div
+                      className="font-medium"
+                      dangerouslySetInnerHTML={{ __html: newText }}
+                    ></div>
+                  </div>
+                </div>
               );
             })}
           </div>
