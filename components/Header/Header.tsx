@@ -80,9 +80,8 @@ const Header = () => {
 
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-     
-      Close();
       router.push(`/search/?${createQueryString("q",inputValue)}`)
+      Close();
     }
   };
 
