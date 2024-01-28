@@ -4,7 +4,7 @@ import { setSession, getSession, setFilterData } from "@/helpers/utils";
 import { useEffect, useState } from "react";
 
 const FetchData = (section: string[]) => {
-  const [cachedData, setCachedData] = useState<any>(null);
+  const [cachedData, setCachedData] = useState<any>([]);
 
   useEffect(() => {
     const fetchData = getSession("myCacheKey");
