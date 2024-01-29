@@ -8,7 +8,7 @@ export const Get = async () => {
   const refetchOnmount = false;
 
   const cacheKey = "myCacheKey";
-  const cachedData = sessionStorage.getItem(cacheKey);
+  const cachedData = localStorage.getItem(cacheKey);
   
   const currentTime = new Date().getTime();
 
@@ -30,18 +30,20 @@ export const Get = async () => {
     if (
       cachedData &&
       JSON.stringify(jsonData) === JSON.stringify(JSON.parse(cachedData))
+      
     ) {
       return JSON.parse(cachedData);
     }
 
     // Elde edilen veriyi önbelleğe ekle
     setSession(cacheKey, jsonData);
-
+   
     return jsonData;
   } catch (error) {
     console.error("Error fetching data:", error);
 
     // Return a placeholder value indicating that the data couldn't be fetched
     return { error: "Data couldn't be fetched" };
+    
   }
 };

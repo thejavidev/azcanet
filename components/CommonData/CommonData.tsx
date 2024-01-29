@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
-const CommonData = ({ cachedData, next, href, notfoundImg }: any) => {
+const CommonData = ({ cachedData, next, href }: any) => {
   return (
     <>
       <div>

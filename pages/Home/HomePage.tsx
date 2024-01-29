@@ -6,11 +6,14 @@ import Media from "@/components/HomePage/Media/Media";
 import Mission from "@/components/HomePage/Mission/Mission";
 import Advocacy from "@/components/Advocacy/Advocacy";
 import { motion as m } from "framer-motion";
+import { useEffect } from "react";
 
 
 const HomePage = () => {
  
- 
+  useEffect(()=>{
+    window.scrollTo(0, 0)
+  },[])
   return (
     <>
      <title>Azcanet.ca - Home Page</title>

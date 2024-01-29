@@ -1,11 +1,11 @@
 // set data from sesion
 export const setSession = (name, data) => {
-  return sessionStorage.setItem(name, JSON.stringify(data));
+  return localStorage.setItem(name, JSON.stringify(data));
 };
 
 // get data from sesion
 export const getSession = (name) => {
-  return sessionStorage.getItem(name);
+  return localStorage.getItem(name);
 };
 
 export const setFilterData = (data, section) => {

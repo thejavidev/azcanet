@@ -27,7 +27,7 @@ const Press: React.FC = () => {
       twitter?.current?.classList?.add("hidden");
     }, 2500);
   }, []);
-
+  const defaultImage = '/notfound.webp';
   const openPressMenu = () => {
     press_menu?.current?.classList?.toggle("hidden");
   };
@@ -37,7 +37,7 @@ const Press: React.FC = () => {
       <div className="grid grid-cols-12 gap-5 px-[50px] py-[50px] lg:py-[20px] lg:px-[20px]">
         <div className="col-span-9  relative lg:col-span-12">
           <Image
-            src={cachedData?.press?.src || "/azcanet.jpg"}
+            src={cachedData?.press?.src || defaultImage}
             width={1000}
             height={400}
             alt="press banner"

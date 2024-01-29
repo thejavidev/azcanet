@@ -6,11 +6,11 @@ const TakeComponnet = ({ data, fade }: any) => {
   return (
     <>
       <div
-        className={`grid grid-cols-12 gap-12 px-[100px]  mt-5 h-[400px] ${fade}`}
+        className={`grid grid-cols-12 gap-12 lg:gap-4   mt-5 ${fade}`}
       >
-        <div className=" col-span-6">
+        <div className=" col-span-6 lg:col-span-12">
           <div className="flex items-start justify-center flex-col h-full">
-            <h2 className="font-bold text-3xl relative pb-3 before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:bg-[#ec5a44]">
+            <h2 className="font-bold text-3xl lg:text-xl relative pb-3 before:content-[''] before:absolute before:bottom-0 before:left-0 before:h-[2px] before:w-full before:bg-[#ec5a44]">
               {data?.title_en}
             </h2>
             <p
@@ -22,7 +22,7 @@ const TakeComponnet = ({ data, fade }: any) => {
             </Link>
           </div>
         </div>
-        <div className="col-span-6">
+        <div className="col-span-6 lg:col-span-12 lg:order-[-1]">
           {data?.src &&
             data?.src?.map((cur: any, i: number) => (
               <Image
@@ -31,6 +31,7 @@ const TakeComponnet = ({ data, fade }: any) => {
                 alt="picture"
                 width={1000}
                 height={400}
+                className="w-full h-[450px] object-cover lg:h-[300px]"
               />
             ))}
         </div>

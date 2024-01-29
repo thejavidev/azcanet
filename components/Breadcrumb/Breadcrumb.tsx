@@ -5,7 +5,7 @@ import { MdOutlineNavigateNext } from "react-icons/md";
 const Breadcrumb = ({ pageNames }: any) => {
   return (
     <>
-      <div className="flex items-center h-[50px] bg-[#f3f3f3] px-[100px] py-[0] gap-1">
+      <div className="flex items-center h-[50px] bg-[#f3f3f3] px-[100px] py-[0] gap-1  2xl:px-[50px] lg:px-[20px]">
         {pageNames?.map((page: any, index: any) => (
           <div key={index}>
             {index < pageNames.length - 1 ? (

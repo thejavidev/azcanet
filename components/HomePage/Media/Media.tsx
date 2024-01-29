@@ -2,7 +2,6 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination } from "swiper/modules";
 import "swiper/css";
-import Link from "next/link";
 import FetchData from "@/helpers/FetchData";
 import MediaComponnet from "@/components/MediaComponnet/MediaComponnet";
 

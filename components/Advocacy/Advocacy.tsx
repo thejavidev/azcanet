@@ -23,12 +23,13 @@ const Advocacy = () => {
   const openPressMenu = () => {
     press_menu?.current?.classList?.toggle("hidden");
   };
+  const defaultImage = '/notfound.webp';
   return (
     <>
       <div className="md:pt-5">
         <div className="relative">
           <Image
-            src={cachedData?.advocacy?.src || "/azcanet.jpg"}
+            src={cachedData?.advocacy?.src || defaultImage}
             width={1000}
             height={400}
             alt="involve banner"
@@ -36,7 +37,7 @@ const Advocacy = () => {
           />
           <div className="hidden md:block ">
             <Image
-              src={cachedData?.advocacy?.src_mobile || "/azcanet.jpg"}
+              src={cachedData?.advocacy?.src_mobile || defaultImage }
               width={1000}
               height={400}
               alt="involve banner"

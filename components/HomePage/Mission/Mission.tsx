@@ -7,13 +7,13 @@ import { FaAngleRight } from "react-icons/fa";
 const Mission = () => {
   const { cachedData } = FetchData(["involve"]);
   
-
+  const defaultImage = '/notfound.webp';
   return (
     <>
       <div className="">
         <div className="relative">
           <Image
-            src={cachedData?.involve?.src || "/azcanet.jpg"}
+            src={cachedData?.involve?.src || defaultImage}
             width={1000}
             height={400}
             alt="involve banner"
@@ -21,7 +21,7 @@ const Mission = () => {
           />
           <div className="hidden md:block ">
             <Image
-              src={cachedData?.involve?.src_mobile || "/azcanet.jpg"}
+              src={cachedData?.involve?.src_mobile || defaultImage}
               width={1000}
               height={400}
               alt="involve banner"

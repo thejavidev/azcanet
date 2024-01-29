@@ -2,29 +2,38 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
+import { FaAngleDown, FaSearch } from "react-icons/fa";
 import { IoSearch } from "react-icons/io5";
 import { RiMenu3Fill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 import FetchData from "@/helpers/FetchData";
 import { IoMdClose } from "react-icons/io";
-import { useRouter ,useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
+import {
+  FaFacebook,
+  FaInstagramSquare,
+  FaTwitter,
+  FaYoutube,
+  FaLinkedin,
+} from "react-icons/fa";
 const Header = () => {
-  const { cachedData } = FetchData(["header", "navbar_colors"]);
+  const { cachedData } = FetchData(["header", "navbar_colors", "sosials"]);
 
   const [isMobile, setIsMobile] = useState(false);
   const [openSubCategory, setOpenSubCategory] = useState<string | null>(null);
   const menu = useRef<any>();
-  const searchParams =useSearchParams();
+  const searchParams = useSearchParams();
   const input = useRef<any>();
   const inputIcon = useRef<any>();
   const alt_item = useRef<any>();
   const opacityLi = useRef<any>();
+  const inputMob = useRef<any>();
+  const contactliInner = useRef<any>();
   const router = useRouter();
   const [inputValue, setInputValue] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+  const [isMenuOpenIcon, setIsMenuOpenIcon] = useState(false);
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1299);
@@ -59,6 +68,11 @@ const Header = () => {
   const openInput = () => {
     input?.current?.classList.add("openInput");
     inputIcon?.current?.classList.remove("inputIcon");
+    input.current.focus();
+  };
+  const closeMob = () => {
+    inputMob.current.classList.toggle("!right-0");
+    inputMob.current.focus();
   };
   const closeInput = () => {
     Close();
@@ -69,22 +83,64 @@ const Header = () => {
     e.preventDefault();
     setInputValue(e.target.value.toLowerCase());
   };
-  const createQueryString=useCallback(
-    (name:string,value:string)=>{
-      const params =new URLSearchParams(searchParams)
-      params.set(name,value)
-      return params.toString()
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams || undefined);
+      params.set(name, value);
+      return params.toString();
     },
     [searchParams]
-  )
+  );
 
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      router.push(`/search/?${createQueryString("q",inputValue)}`)
+      const query =
+        inputValue !== undefined ? createQueryString("q", inputValue) : "";
+      router.push(`/search/?${query}`);
       Close();
+      closeMob();
+      input.current.value = "";
+      inputMob.current.value = "";
     }
   };
-
+  const sosicals = [
+    {
+      id: 1,
+      icon: <FaFacebook />,
+      link: `${cachedData?.sosials?.facebook}`,
+    },
+    {
+      id: 2,
+      icon: <FaInstagramSquare />,
+      link: `${cachedData?.sosials?.instagram}`,
+    },
+    {
+      id: 3,
+      icon: <FaTwitter />,
+      link: `${cachedData?.sosials?.twitter}`,
+    },
+    {
+      id: 4,
+      icon: <FaYoutube />,
+      link: `${cachedData?.sosials?.youtube}`,
+    },
+    {
+      id: 5,
+      icon: <FaLinkedin />,
+      link: `${cachedData?.sosials?.linkedin}`,
+    },
+  ];
+  const openContactMenu = () => {
+    contactliInner.current.classList.toggle("contactliInnerMob");
+  };
+  const openSearch = () => {
+    closeMob();
+    setIsMenuOpenIcon(true);
+  };
+  const closeSearch = () => {
+    closeMob();
+    setIsMenuOpenIcon(false);
+  };
 
   return (
     <>
@@ -108,7 +164,7 @@ const Header = () => {
           </div>
           <div className="w-full flex justify-end ">
             <ul
-              className={` flex  gap-2    justify-evenly bg-[#fff]  w-full transition-all  xl:flex-col xl:fixed xl:top-[-100%] xl:right-0 xl:left-0 xl:px-8`}
+              className={` flex  gap-2    justify-evenly bg-[#fff]  w-full transition-all  xl:flex-col xl:fixed xl:top-[-100%] xl:right-0 xl:left-0 xl:px-8 md:px-2`}
               ref={menu}
             >
               {cachedData?.header &&
@@ -119,7 +175,7 @@ const Header = () => {
                     onClick={() => openAltMenu(item?.alt_menu)}
                     className={` nav_item flex gap-2 xl:gap-0  h-full  cursor-pointer  xl:transition-all xl:ease-out     tl  items-center justify-center text-lg font-semibold text-[#fff] border-[1px] border-solid border-transparent  relative z-[250]  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px] xl:flex-col xl:items-start`}
                   >
-                    <div className="w-full h-full  p-[8px] uppercase bg-[#ec5a44] xl:bg-transparent rounded-md">
+                    <div className="w-full h-full  p-[8px] lg:p-[2px] uppercase bg-[#ec5a44] xl:bg-transparent rounded-md">
                       {item?.alt_menu?.length > 0 ? (
                         <div className="flex items-center">
                           <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
@@ -130,6 +186,7 @@ const Header = () => {
                       ) : (
                         <Link
                           href={item?.slug_en}
+                          prefetch={true}
                           className="flex items-center"
                         >
                           <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
@@ -155,6 +212,7 @@ const Header = () => {
                                 className="text-[#4f4f4f] capitalize  hover:text-[#ec5a44] tl inline-block text-[14px]"
                               >
                                 <Link
+                                  prefetch={true}
                                   className="py-[14px] xl:py-[5px] inline-block"
                                   href={`/${item?.slug_en}`}
                                 >
@@ -168,10 +226,60 @@ const Header = () => {
                     </div>
                   </li>
                 ))}
-              <li className="flex gap-2 h-full p-[8px] cursor-pointer  uppercase bg-[#ec5a44] rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid border-transparent  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px]">
-                <span>contact</span>
-                <div>
+              <li
+                onClick={openContactMenu}
+                className="flex gap-2 flex-col relative h-full p-[8px] cursor-pointer  uppercase bg-[#ec5a44] rounded-md tl  items-start justify-center  font-semibold text-white border-[1px] border-solid border-transparent  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a]  md:p-[4px] contactLi"
+              >
+                <div className="flex items-center">
+                  <span className="text-lg 2xl:text-[13px]">contact</span>
                   <FaAngleDown />
+                </div>
+                <div
+                  ref={contactliInner}
+                  className={`absolute contactLi top-[55px] left-0 px-[20px] py-[20px] rounded-md right-0  w-[400px] h-auto text-black tl bg-[#fff]
+                    ${isMobile ? "contactliInnerMob" : "contactliInner"}`}
+                >
+                  <div className="flex flex-col gap-2 bg-white">
+                    <div className="flex items-center border-b-[1px] pb-3">
+                      <span className="text-[13px] capitalize">
+                        email :
+                        <a
+                          className="lowercase pl-1"
+                          href={`mailto:${cachedData?.sosials?.email}`}
+                        >
+                          {cachedData?.sosials?.email}
+                        </a>
+                      </span>
+                    </div>
+                    <div className="flex items-center border-b-[1px] pb-3">
+                      <span className="text-[13px] capitalize">
+                        adress :
+                        <a
+                          className="lowercase pl-1"
+                          target="_blank"
+                          href={`${cachedData?.sosials?.map}`}
+                        >
+                          {cachedData?.sosials?.unvan_en}
+                        </a>
+                      </span>
+                    </div>
+                    <ul className="flex items-center gap-5 mt-2">
+                      {sosicals?.map((item, i) => (
+                        <li
+                          key={i}
+                          className="text-[#f44] text-[25px] tl hover:-translate-y-2"
+                        >
+                          <a
+                            href={item?.link}
+                            className="inline-block md:text-[20px]"
+                            target="_blank"
+                          >
+                            {item?.icon}
+                          </a>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </li>
               <li
@@ -195,12 +303,12 @@ const Header = () => {
                 </Link>
               </li>
               <li className="">
-                <div className="flex items-center relative w-full">
+                <div className="flex items-center  w-full relative ">
                   <input
                     ref={input}
                     onKeyUp={(e) => handleKeyUp(e)}
                     onChange={handleChange}
-                    className="fixed inputSearch top-[10px] right-[40px]  border-[1px]  border-red-400 text-black  tl z-[300] px-[10px] py-[10px] outline-none"
+                    className={`fixed inputSearch  top-[10px] right-[40px]  border-[1px] rounded-md  border-red-400 text-black  tl z-[300] px-[10px] py-[10px] outline-none`}
                     type="text"
                   />
                   <div
@@ -213,6 +321,24 @@ const Header = () => {
                 </div>
               </li>
             </ul>
+            <div className="hidden xl:flex mt-1 mr-5">
+              {isMenuOpenIcon ? (
+                <IoMdClose onClick={closeSearch}  className="text-2xl text-[#ec5a44] cursor-pointer" />
+              ) : (
+                <FaSearch
+                  onClick={openSearch}
+                  className="text-xl text-[#ec5a44] cursor-pointer"
+                />
+              )}
+
+              <input
+                ref={inputMob}
+                onKeyUp={(e) => handleKeyUp(e)}
+                onChange={handleChange}
+                className={`absolute  top-[70px] -right-full  border-[1px] rounded-md  border-red-400 text-black w-[80%]  tl z-[300] px-[10px] py-[10px] outline-none`}
+                type="text"
+              />
+            </div>
             <div className="hidden xl:flex">
               <button
                 onClick={openMenu}
