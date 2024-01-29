@@ -212,7 +212,7 @@ const Header = () => {
                                 className="text-[#4f4f4f] capitalize  hover:text-[#ec5a44] tl inline-block text-[14px]"
                               >
                                 <Link
-                                  prefetch={true}
+                                 
                                   className="py-[14px] xl:py-[5px] inline-block"
                                   href={`/${item?.slug_en}`}
                                 >
