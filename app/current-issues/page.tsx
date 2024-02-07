@@ -56,24 +56,24 @@ const page = () => {
             width={1000}
             height={300}
             alt=""
-            className="w-full h-[350px] object-cover"
+            className="w-full h-[350px] lg:h-[250px] object-cover"
           />
         </div>
 
-        <div className="wrapper">
+        <div className="px-[150px] 2xl:px-[50px] lg:px-[20px]">
           <div className="mt-[20px]">
             <Tabs>
               {cachedData?.currentIsusesCtg?.map((data: any) => (
                 <Tabs.Panel key={data?.id} title={data?.name_en}>
                   <div className="pt-[50px]">
                     <p
-                      className="font-[700] text-[35px] tracking-[0.7px] text-[#212529]"
+                      className="font-[700] text-[35px] lg:text-[20px] md:text-[16px] tracking-[0.7px] text-[#212529]"
                       dangerouslySetInnerHTML={{
                         __html: data && data?.title_en,
                       }}
                     ></p>
                     <div
-                      className="tab-content"
+                      className="tab-content lg:text-[13px] "
                       dangerouslySetInnerHTML={{
                         __html: data && data?.text_en,
                       }}

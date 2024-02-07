@@ -38,7 +38,7 @@ const MediaComponnet = ({ item, href ,classes}: any) => {
                   );
                 })}
           </div>
-          <p className="font-bold text-[16px] mt-2 text-[#212529] line-clamp-2 transition-all ease-linear">
+          <p className="font-bold text-[16px] lg:text-[13px] mt-2 text-[#212529] line-clamp-2 transition-all ease-linear">
             {item?.title_en}
           </p>
         </Link>

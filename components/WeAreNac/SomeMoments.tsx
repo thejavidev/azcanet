@@ -10,12 +10,12 @@ import "swiper/css/pagination";
 import Image from "next/image";
 const SomeMoments = () => {
   const { cachedData } = FetchData(["moments"]);
-
+  const notfoundImg = "/notfound.webp";
   return (
     <>
       <div className="px-[50px] py-[20px] mb-10 mt-20 lg:py-[20px] lg:px-[20px] some_moments ">
-        <div className="flex items-center justify-center mb-10 w-full text-black font-bold text-5xl ">
-          <h1 className="text-center "> Some moments of N.A.C.</h1>
+        <div className="flex items-center justify-center mb-10 w-full text-black font-bold  ">
+          <h1 className="text-center text-5xl 2xl:text-2xl lg:text-xl"> Some moments of N.A.C.</h1>
         </div>
         <div >
           <Swiper
@@ -48,7 +48,7 @@ const SomeMoments = () => {
               },
             }}
             modules={[Autoplay, Pagination]}
-            className="h-[250px]"
+            className="h-[250px] lg:h-[300px]"
           >
             {cachedData &&
               cachedData?.moments?.map((item: any, i: number) => {
@@ -58,13 +58,13 @@ const SomeMoments = () => {
                       <div className="relative overflow-hidden">
                         <div className="w-full">
                           <LightGallery elementClassNames="custom-wrapper-class">
-                            <a href={item?.src}>
+                            <a href={item?.src ? item?.src: notfoundImg}>
                               <Image
-                                src={item?.src}
+                                src={item?.src ? item?.src :notfoundImg}
                                 alt=""
                                 width={1000}
                                 height={500}
-                                className="w-full object-cover h-[200px] rounded-[10px]"
+                                className="w-full object-cover h-[200px]  rounded-[10px]"
                               />
                             </a>
                           </LightGallery>

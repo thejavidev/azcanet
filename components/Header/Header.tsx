@@ -2,28 +2,42 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { FaAngleDown } from "react-icons/fa";
-import { IoSearch } from "react-icons/io5";
+import { FaAngleDown, FaSearch } from "react-icons/fa";
 import { RiMenu3Fill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 import FetchData from "@/helpers/FetchData";
 import { IoMdClose } from "react-icons/io";
-import { useRouter ,useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname } from "next/navigation";
+import {
+  FaFacebook,
+  FaInstagramSquare,
+  FaTwitter,
+  FaYoutube,
+  FaLinkedin,
+} from "react-icons/fa";
+import AltMenu from "./AltMenu";
+import EmailAndAdress from "./EmailAndAdress";
+import IoSearchLi from "./IoSearch";
+import SupportUs from "./SupportUs";
 
 const Header = () => {
-  const { cachedData } = FetchData(["header", "navbar_colors"]);
+  const { cachedData } = FetchData(["header", "navbar_colors", "sosials"]);
 
   const [isMobile, setIsMobile] = useState(false);
   const [openSubCategory, setOpenSubCategory] = useState<string | null>(null);
   const menu = useRef<any>();
-  const searchParams =useSearchParams();
+  const searchParams = useSearchParams();
   const input = useRef<any>();
   const inputIcon = useRef<any>();
   const alt_item = useRef<any>();
   const opacityLi = useRef<any>();
+  const inputMob = useRef<any>();
+  const contactliInner = useRef<any>();
   const router = useRouter();
   const [inputValue, setInputValue] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isMenuOpenIcon, setIsMenuOpenIcon] = useState(false);
 
   useEffect(() => {
     const handleResize = () => {
@@ -40,15 +54,13 @@ const Header = () => {
   const openAltMenu = (name: any) => {
     setOpenSubCategory((prev) => (prev === name ? null : name));
   };
-
+  const menuClassList = menu?.current?.classList;
   const openMenu = () => {
-    const menuClassList = menu.current.classList;
-
-    if (menuClassList.contains("xl:top-[-100%]")) {
-      menuClassList.replace("xl:top-[-100%]", "xl:top-16");
+    if (menuClassList?.contains("xl:top-[-100%]")) {
+      menuClassList?.replace("xl:top-[-100%]", "xl:top-16");
       setIsMenuOpen(true);
     } else {
-      menuClassList.replace("xl:top-16", "xl:top-[-100%]");
+      menuClassList?.replace("xl:top-16", "xl:top-[-100%]");
       setIsMenuOpen(false);
     }
   };
@@ -59,6 +71,11 @@ const Header = () => {
   const openInput = () => {
     input?.current?.classList.add("openInput");
     inputIcon?.current?.classList.remove("inputIcon");
+    input.current.focus();
+  };
+  const closeMob = () => {
+    inputMob.current.classList.toggle("!right-0");
+    inputMob.current.focus();
   };
   const closeInput = () => {
     Close();
@@ -69,22 +86,73 @@ const Header = () => {
     e.preventDefault();
     setInputValue(e.target.value.toLowerCase());
   };
-  const createQueryString=useCallback(
-    (name:string,value:string)=>{
-      const params =new URLSearchParams(searchParams)
-      params.set(name,value)
-      return params.toString()
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const params = new URLSearchParams(searchParams || undefined);
+      params.set(name, value);
+      return params.toString();
     },
     [searchParams]
-  )
+  );
 
   const handleKeyUp = (e: any) => {
     if (e.keyCode === 13) {
-      router.push(`/search/?${createQueryString("q",inputValue)}`)
+      const query =
+        inputValue !== undefined ? createQueryString("q", inputValue) : "";
+      router.push(`/search/?${query}`);
       Close();
+      closeMob();
+      input.current.value = "";
+      inputMob.current.value = "";
     }
   };
+  const sosicals = [
+    {
+      id: 1,
+      icon: <FaFacebook />,
+      link: `${cachedData?.sosials?.facebook}`,
+    },
+    {
+      id: 2,
+      icon: <FaInstagramSquare />,
+      link: `${cachedData?.sosials?.instagram}`,
+    },
+    {
+      id: 3,
+      icon: <FaTwitter />,
+      link: `${cachedData?.sosials?.twitter}`,
+    },
+    {
+      id: 4,
+      icon: <FaYoutube />,
+      link: `${cachedData?.sosials?.youtube}`,
+    },
+    {
+      id: 5,
+      icon: <FaLinkedin />,
+      link: `${cachedData?.sosials?.linkedin}`,
+    },
+  ];
+  const openContactMenu = () => {
+    contactliInner.current.classList.toggle("contactliInnerMob");
+  };
+  const openSearch = () => {
+    closeMob();
+    setIsMenuOpenIcon(true);
+  };
+  const closeSearch = () => {
+    closeMob();
+    setIsMenuOpenIcon(false);
+  };
+  const pathname = usePathname();
 
+  useEffect(() => {
+    if (pathname !== "/" || pathname === "/") {
+      menuClassList?.replace("xl:top-16", "xl:top-[-100%]");
+      setIsMenuOpen(true);
+      setIsMenuOpen(false);
+    }
+  }, [pathname]);
 
   return (
     <>
@@ -108,99 +176,53 @@ const Header = () => {
           </div>
           <div className="w-full flex justify-end ">
             <ul
-              className={` flex  gap-2    justify-evenly bg-[#fff]  w-full transition-all  xl:flex-col xl:fixed xl:top-[-100%] xl:right-0 xl:left-0 xl:px-8`}
+              className={` flex  gap-2    justify-evenly bg-[#fff]  w-full transition-all  xl:flex-col xl:fixed xl:top-[-100%] xl:right-0 xl:left-0 xl:px-8 md:px-2`}
               ref={menu}
             >
               {cachedData?.header &&
                 cachedData?.header?.map((item: any, i: number) => (
-                  <li
+                  <AltMenu
                     key={i}
-                    ref={opacityLi}
-                    onClick={() => openAltMenu(item?.alt_menu)}
-                    className={` nav_item flex gap-2 xl:gap-0  h-full  cursor-pointer  xl:transition-all xl:ease-out     tl  items-center justify-center text-lg font-semibold text-[#fff] border-[1px] border-solid border-transparent  relative z-[250]  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px] xl:flex-col xl:items-start`}
-                  >
-                    <div className="w-full h-full  p-[8px] uppercase bg-[#ec5a44] xl:bg-transparent rounded-md">
-                      {item?.alt_menu?.length > 0 ? (
-                        <div className="flex items-center">
-                          <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
-                            {item?.menu_en}
-                          </h1>
-                          <FaAngleDown className={`xl:text-[#ec5a44] `} />
-                        </div>
-                      ) : (
-                        <Link
-                          href={item?.slug_en}
-                          className="flex items-center"
-                        >
-                          <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
-                            {item?.menu_en}
-                          </h1>
-                        </Link>
-                      )}
-                      {item?.alt_menu && item?.alt_menu?.length > 0 && (
-                        <ul
-                          ref={alt_item}
-                          className={`absolute top-0 left-0 right-0 alt_item flex w-max xl:static bg-[#fff] xl:bg-transparent flex-col tlss rounded-md py-[7px] px-[20px] xl:px-[5px] tl opacity-0 invisible xl:opacity-100 xl:visible  ${
-                            isMobile
-                              ? openSubCategory === item?.alt_menu
-                                ? "xl:flex h-auto bg-[#fff]"
-                                : "xl:hidden h-0"
-                              : ""
-                          }`}
-                        >
-                          {item?.alt_menu?.map((item: any, i: number) => {
-                            return (
-                              <li
-                                key={i}
-                                className="text-[#4f4f4f] capitalize  hover:text-[#ec5a44] tl inline-block text-[14px]"
-                              >
-                                <Link
-                                  className="py-[14px] xl:py-[5px] inline-block"
-                                  href={`/${item?.slug_en}`}
-                                >
-                                  {item?.menu_en}
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      )}
-                    </div>
-                  </li>
+                    refkey={opacityLi}
+                    refkey2={alt_item}
+                    openSubCategory={openSubCategory}
+                    isMobile={isMobile}
+                    openAltMenu={() => openAltMenu(item?.alt_menu)}
+                    items={item}
+                    openMenu={openMenu}
+                  />
                 ))}
-              <li className="flex gap-2 h-full p-[8px] cursor-pointer  uppercase bg-[#ec5a44] rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid border-transparent  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px]">
-                <span>contact</span>
-                <div>
+              <li
+                onClick={openContactMenu}
+                className="flex gap-2 flex-col relative h-full p-[8px] cursor-pointer  uppercase bg-[#ec5a44] rounded-md tl  items-start justify-center  font-semibold text-white border-[1px] border-solid border-transparent  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a]  md:p-[4px] contactLi"
+              >
+                <div className="flex items-center">
+                  <span className="text-lg 2xl:text-[13px]">contact</span>
                   <FaAngleDown />
                 </div>
-              </li>
-              <li
-                onClick={openInput}
-                className="flex h-full  px-[18px] cursor-pointer  uppercase xl:hidden  bg-[#ec5a44] lg:bg-transparent rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid lg:border-0 "
-              >
-                <IoSearch className="text-[25px] xl:text-[#ec5a44]" />
-              </li>
-              <li
-                style={{
-                  background: mobileSupport,
-                }}
-                className={` flex gap-2 h-full  p-[8px] cursor-pointer   uppercase rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid border-transparent xl:items-start xl:justify-start xl:bg-transparent xl:text-[#ec5a44] 2xl:text-[13px] md:p-[4px]`}
-              >
-                <Link
-                  href="/supportus"
-                  target="_blank"
-                  className="text-white xl:text-[#ec5a44]"
+                <div
+                  ref={contactliInner}
+                  className={`absolute contactLi top-[55px] left-0 px-[20px] py-[20px] rounded-md right-0  w-[400px] h-auto text-black tl bg-[#fff]
+                    ${isMobile ? "contactliInnerMob" : "contactliInner"}`}
                 >
-                  support us
-                </Link>
+                  <EmailAndAdress
+                    sosicals={sosicals}
+                    email={cachedData?.sosials?.email}
+                    map={cachedData?.sosials?.map}
+                    adress={cachedData?.sosials?.unvan_en}
+                  />
+                </div>
               </li>
+              <IoSearchLi openInput={openInput} />
+              <SupportUs mobileSupport={mobileSupport} />
+
               <li className="">
-                <div className="flex items-center relative w-full">
+                <div className="flex items-center  w-full relative ">
                   <input
                     ref={input}
                     onKeyUp={(e) => handleKeyUp(e)}
                     onChange={handleChange}
-                    className="fixed inputSearch top-[10px] right-[40px]  border-[1px]  border-red-400 text-black  tl z-[300] px-[10px] py-[10px] outline-none"
+                    className={`fixed inputSearch  top-[10px] right-[40px]  border-[1px] rounded-md  border-red-400 text-black  tl z-[300] px-[10px] py-[10px] outline-none`}
                     type="text"
                   />
                   <div
@@ -213,6 +235,27 @@ const Header = () => {
                 </div>
               </li>
             </ul>
+            <div className="hidden xl:flex mt-1 mr-5">
+              {isMenuOpenIcon ? (
+                <IoMdClose
+                  onClick={closeSearch}
+                  className="text-2xl text-[#ec5a44] cursor-pointer"
+                />
+              ) : (
+                <FaSearch
+                  onClick={openSearch}
+                  className="text-xl text-[#ec5a44] cursor-pointer"
+                />
+              )}
+
+              <input
+                ref={inputMob}
+                onKeyUp={(e) => handleKeyUp(e)}
+                onChange={handleChange}
+                className={`absolute  top-[70px] -right-full  border-[1px] rounded-md  border-red-400 text-black w-[80%]  tl z-[300] px-[10px] py-[10px] outline-none`}
+                type="text"
+              />
+            </div>
             <div className="hidden xl:flex">
               <button
                 onClick={openMenu}

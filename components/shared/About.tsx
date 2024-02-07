@@ -17,11 +17,12 @@ const About: React.FC<AboutProps> = ({
   url,
   bg,
 }) => {
+  const notfoundImg = "/notfound.webp";
   return (
     <>
       <div
         style={{ backgroundImage: `url(${bg})` }}
-        className="px-[183px] xl:px-[40px] md:p-[50px] sm:py-[50px] sm:px-[18px] py-[60px] bg-cover bg-full text-white flex lg:flex-col items-center gap-[24px]"
+        className="px-[183px]  xl:px-[40px] md:p-[50px] sm:py-[50px] sm:px-[18px] py-[60px] bg-cover bg-full text-white flex lg:flex-col items-center gap-[24px]"
       >
         <div className="w-[50%] lg:w-full">
           {title2 !== null && (
@@ -31,7 +32,7 @@ const About: React.FC<AboutProps> = ({
           )}
           {text2 !== null && (
             <p
-              className="pt-[20px] mb-[10px] text-justify text-[16px] font-[400]"
+              className="pt-[20px] mb-[10px] text-justify text-[16px] lg:text-[13px] font-[400]"
               dangerouslySetInnerHTML={{ __html: text2 }}
             ></p>
           )}
@@ -39,13 +40,13 @@ const About: React.FC<AboutProps> = ({
             {title}
           </h3>
           <p
-            className="pt-[20px] text-justify text-[16px] font-[400]"
+            className="pt-[20px] text-justify text-[16px] font-[400] lg:text-[13px]"
             dangerouslySetInnerHTML={{ __html: text }}
           ></p>
         </div>
         <div className="w-[50%] lg:w-full">
           <Image
-            src={url}
+            src={url ? url : notfoundImg}
             width={1000}
             height={500}
             alt={`Picture of the ${title}`}

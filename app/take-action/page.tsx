@@ -61,7 +61,7 @@ const Page = () => {
             images={cachedData?.options?.take_action?.take_action_banner_src}
           />
         </div>
-        <div className="px-[100px] py-[20px]">
+        <div className="px-[100px] py-[20px] 2xl:px-[50px] lg:p-[20px]">
           <div className="flex items-center justify-center gap-4">
             <button
               className={`text-white font-semibold rounded-md uppercase p-3 ${

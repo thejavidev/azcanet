@@ -19,6 +19,7 @@ const page = () => {
     },
   ];
   const { cachedData } = FetchData(["options", "faq"]);
+  
   useEffect(()=>{
     window.scrollTo(0, 0)
   },[])
@@ -43,14 +44,14 @@ const page = () => {
           />
         </div>
         <div
-          className="py-[30px] px-[100px] tab-content media"
+          className="py-[30px] px-[100px] 2xl:px-[50px] lg:px-[20px] tab-content media lg:text-sm"
           dangerouslySetInnerHTML={{
             __html:
               cachedData?.options?.become &&
               cachedData?.options?.become?.become_member_text_en,
           }}
         ></div>
-        <div className="py-[30px] px-[100px]">
+        <div className="py-[30px] px-[100px] 2xl:px-[50px] lg:px-[20px] md:px-[10px]">
           <AccordionItem accordionItems={cachedData?.faq} />
         </div>
       </m.div>

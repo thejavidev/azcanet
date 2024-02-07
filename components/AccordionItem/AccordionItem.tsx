@@ -13,10 +13,10 @@ const AccordionItem = ({ accordionItems }: any) => {
         accordionItems?.map((item: any, i: number) => (
           <div key={i} className="bg-[#adc4e6] font-normal rounded-lg">
             <div
-              className="flex justify-between items-center p-5 cursor-pointer"
+              className="flex justify-between items-center p-5 lg:p-2 cursor-pointer"
               onClick={() => setIsOpen(!isOpen)}
             >
-              <h2 className="font-semibold text-xl text-white">
+              <h2 className="font-semibold text-xl lg:text-lg text-white">
                 {item?.option_title_en}
               </h2>
               <div>
@@ -33,7 +33,7 @@ const AccordionItem = ({ accordionItems }: any) => {
               classNames="fade"
               unmountOnExit
             >
-              <div className="p-5 text-md text-black">{item?.supportus_en}</div>
+              <div className="p-5 lg:px-2 text-md text-black">{item?.supportus_en}</div>
             </CSSTransition>
           </div>
         ))}

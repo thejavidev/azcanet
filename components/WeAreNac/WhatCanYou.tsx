@@ -5,7 +5,7 @@ import React from "react";
 
 const WhatCanYou = () => {
   const { cachedData } = FetchData(["who"]);
-
+  const notfoundImg = "/notfound.webp";
   const cards = [
     {
       id: 1,
@@ -32,10 +32,10 @@ const WhatCanYou = () => {
 
   return (
     <>
-      <div className="mt-20 mb-10">
+      <div className="mt-20 lg:mt-6 mb-10">
         <div className="flex items-center justify-center w-full flex-col">
           <h2
-            className="font-bold text-4xl text-[#212529]"
+            className="font-bold text-4xl 2xl:text-2xl lg:tetx-xl text-center text-[#212529]"
             dangerouslySetInnerHTML={{
               __html: cachedData?.who?.all && cachedData?.who?.all?.title_1_en,
             }}
@@ -52,17 +52,17 @@ const WhatCanYou = () => {
             cards?.map((item, i) => (
               <li
                 key={i}
-                className={`col-span-4 relative overflow-hidden h-[570px] cursor-pointer flag_part ${item?.bgColor}`}
+                className={`col-span-4 lg:col-span-12 relative overflow-hidden h-[570px] lg:h-[300px] cursor-pointer flag_part ${item?.bgColor}`}
               >
                 <Link href={item?.link} className="inline-block w-full h-full ">
                   <img
-                    src={item?.src ? item?.src : "./azcanet.jpg"}
+                    src={item?.src ? item?.src : notfoundImg}
                     alt=""
                     width={1000}
                     height={530}
-                    className="w-full h-[570px] object-cover"
+                    className="w-full h-[570px] lg:h-[300px] object-cover"
                   />
-                  <div className="z-10 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] font-bold flex justify-center items-center text-4xl text-center text-white " dangerouslySetInnerHTML={{__html:item?.title && item?.title}}></div>
+                  <div className="z-10 absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] font-bold flex justify-center items-center text-4xl 2xl:text-2xl lg:text-xl text-center text-white " dangerouslySetInnerHTML={{__html:item?.title && item?.title}}></div>
                 </Link>
               </li>
             ))}

@@ -1,18 +1,19 @@
-"use client"
+"use client";
 import FetchData from "@/helpers/FetchData";
 import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 const Contributor = () => {
-  const {cachedData} = FetchData(["p_mission"])
+  const { cachedData } = FetchData(["p_mission"]);
+  const defaultImage = "/notfound.webp";
 
   return (
     <>
       <div className="">
         <div className="relative ">
           <Image
-            src={cachedData?.p_mission?.pmission_src || "/azcanet.jpg"}
+            src={cachedData?.p_mission?.pmission_src || defaultImage}
             width={1000}
             height={400}
             alt="press banner"
@@ -30,7 +31,11 @@ const Contributor = () => {
             ></p>
             <div className="mt-5">
               <div className="flex items-center gap-3  w-fit  h-full  cursor-pointer  md:px-[20px]">
-                <Link href='/supportus' target="_blank" className="w-full h-full flex items-center gap-4 border-2 px-2 py-3 rounded-md bg-[#ec5a44]">
+                <Link
+                  href="/supportus"
+                  target="_blank"
+                  className="w-full h-full flex items-center gap-4 border-2 px-2 py-3 rounded-md bg-[#ec5a44]"
+                >
                   <h1 className=" text-[16px] text-white uppercase  font-semibold">
                     {cachedData?.p_mission?.pmission_button_en}
                   </h1>
