@@ -69,7 +69,7 @@ const Advocacy = () => {
               </div>
               <ul
                 ref={press_menu}
-                className="absolute bottom-[-125px] left-0 right-0 bg-white w-fit hidden transition-all "
+                className="absolute bottom-[-125px] lg:bottom-auto lg:top-[-130px] lg:border-[1px] bg:border-[#ccc] left-0 right-0 lg:bg-[#f6f6f6] bg-white w-fit hidden transition-all "
               >
                 {altMenuItems &&
                   altMenuItems?.map((item: any, i: number) => (

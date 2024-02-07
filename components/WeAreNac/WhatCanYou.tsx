@@ -5,7 +5,7 @@ import React from "react";
 
 const WhatCanYou = () => {
   const { cachedData } = FetchData(["who"]);
-
+  const notfoundImg = "/notfound.webp";
   const cards = [
     {
       id: 1,
@@ -56,7 +56,7 @@ const WhatCanYou = () => {
               >
                 <Link href={item?.link} className="inline-block w-full h-full ">
                   <img
-                    src={item?.src ? item?.src : undefined}
+                    src={item?.src ? item?.src : notfoundImg}
                     alt=""
                     width={1000}
                     height={530}

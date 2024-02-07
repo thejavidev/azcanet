@@ -5,9 +5,14 @@ import "swiper/css";
 import FetchData from "@/helpers/FetchData";
 import MediaComponnet from "@/components/MediaComponnet/MediaComponnet";
 
-const Media = () => {
+const Media = ({ shuffle }: any) => {
   const { cachedData } = FetchData(["media"]);
+  let mediaData = cachedData?.media;
 
+  // Apply shuffle logic only if the shuffle prop is provided
+  if (shuffle && mediaData) {
+    mediaData = shuffle(Array?.from(mediaData));
+  }
   return (
     <>
       <div className="px-[50px] py-[20px] mb-10 lg:py-[20px] lg:px-[20px] ">
@@ -38,8 +43,8 @@ const Media = () => {
           modules={[Pagination]}
           className="mySwiper"
         >
-          {cachedData &&
-            cachedData?.media?.slice(0, 4)?.map((item: any, i: number) => {
+          {mediaData &&
+            mediaData?.slice(0, 4).map((item: any, i: number) => {
               return (
                 <SwiperSlide key={i}>
                   <MediaComponnet href={item?.slug_en} item={item} />

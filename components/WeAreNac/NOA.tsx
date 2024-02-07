@@ -39,7 +39,7 @@ const NOA = () => {
       title: "page audience",
     },
   ];
-
+  const notfoundImg = "/notfound.webp";
   return (
     <>
       <div className="relative mt-10 lg:mt-0 mb-16 px-[100px] 2xl:px-[50px] lg:p-[20px]">
@@ -53,7 +53,7 @@ const NOA = () => {
               src={
                 cachedData?.who?.section_1?.section_one_src
                   ? cachedData?.who?.section_1?.section_one_src
-                  : undefined
+                  : notfoundImg
               }
               alt=""
             />
@@ -74,14 +74,14 @@ const NOA = () => {
                 onClick={closeModal}
                 className="fixed top-0 left-0 right-0 w-full h-screen bg-overlay z-[1150] "
               ></div>
-              <div className="w-[700px] h-[500px] bg-[#fff] p-[5px] fixed flex items-center justify-center top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] z-[1555] ">
+              <div className="w-[700px] h-[500px] lg:w-[300px] lg:h-[300px] bg-[#fff] p-[5px] absolute flex items-center justify-center top-[50%] left-[50%] -translate-x-[50%] -translate-y-[50%] z-[1555] ">
                 <iframe
                   className="w-full h-full"
                   src={cachedData?.who?.section_1?.section_one_video_link}
                 ></iframe>
                 <span
                   onClick={closeModal}
-                  className="absolute -right-8 -top-8 cursor-pointer text-white"
+                  className="absolute -right-8 lg:right-0 -top-8  cursor-pointer text-white"
                 >
                   
                   <IoMdClose className="text-[35px]" />

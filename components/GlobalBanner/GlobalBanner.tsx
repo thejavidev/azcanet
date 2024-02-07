@@ -21,7 +21,7 @@ const GlobalBanner = ({ longtext, bgColor, images }: any) => {
                   width={1000}
                   height={300}
                   alt=""
-                  className="w-full h-[350px] object-cover lg:h-[300px]"
+                  className="w-full h-[350px] object-cover lg:h-[300px] md:h-[200px]"
                 />
               ))
             ) : (
@@ -30,7 +30,7 @@ const GlobalBanner = ({ longtext, bgColor, images }: any) => {
                 width={1000}
                 height={300}
                 alt=""
-                className="w-full h-[350px] object-cover lg:h-[300px]"
+                className="w-full h-[350px] object-cover lg:h-[300px] md:h-[200px]"
               />
             ))}
         </div>

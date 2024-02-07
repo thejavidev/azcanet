@@ -17,33 +17,33 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
 
-  const [visible, setVisible] = useState(false);
+    const [visible, setVisible] = useState(false);
 
-  const toggleVisible = () => {
-    const scrolled = document.documentElement.scrollTop;
-    if (scrolled > 300) {
-      setVisible(true);
-    } else if (scrolled <= 300) {
-      setVisible(false);
-    }
-  };
+    const toggleVisible = () => {
+      const scrolled = document.documentElement.scrollTop;
+      if (scrolled > 300) {
+        setVisible(true);
+      } else if (scrolled <= 300) {
+        setVisible(false);
+      }
+    };
 
-  const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
-  };
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth",
+      });
+    };
 
-  useEffect(() => {
-    Get()?.then(() => {
-      setLoading(false);
-    });
-    console.clear();
-    window.addEventListener("scroll", toggleVisible);
-  }, []);
+    useEffect(() => {
+      Get()?.then(() => {
+        setLoading(false);
+      });
+
+      window.addEventListener("scroll", toggleVisible);
+    }, []);
 
   return (
     <html lang="en">

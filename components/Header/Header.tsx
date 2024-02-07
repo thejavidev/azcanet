@@ -3,13 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { FaAngleDown, FaSearch } from "react-icons/fa";
-import { IoSearch } from "react-icons/io5";
 import { RiMenu3Fill } from "react-icons/ri";
 import { AiOutlineClose } from "react-icons/ai";
 import FetchData from "@/helpers/FetchData";
 import { IoMdClose } from "react-icons/io";
 import { useRouter, useSearchParams } from "next/navigation";
-
+import { usePathname } from "next/navigation";
 import {
   FaFacebook,
   FaInstagramSquare,
@@ -17,6 +16,11 @@ import {
   FaYoutube,
   FaLinkedin,
 } from "react-icons/fa";
+import AltMenu from "./AltMenu";
+import EmailAndAdress from "./EmailAndAdress";
+import IoSearchLi from "./IoSearch";
+import SupportUs from "./SupportUs";
+
 const Header = () => {
   const { cachedData } = FetchData(["header", "navbar_colors", "sosials"]);
 
@@ -34,6 +38,7 @@ const Header = () => {
   const [inputValue, setInputValue] = useState();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuOpenIcon, setIsMenuOpenIcon] = useState(false);
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobile(window.innerWidth <= 1299);
@@ -49,15 +54,13 @@ const Header = () => {
   const openAltMenu = (name: any) => {
     setOpenSubCategory((prev) => (prev === name ? null : name));
   };
-
+  const menuClassList = menu?.current?.classList;
   const openMenu = () => {
-    const menuClassList = menu.current.classList;
-
-    if (menuClassList.contains("xl:top-[-100%]")) {
-      menuClassList.replace("xl:top-[-100%]", "xl:top-16");
+    if (menuClassList?.contains("xl:top-[-100%]")) {
+      menuClassList?.replace("xl:top-[-100%]", "xl:top-16");
       setIsMenuOpen(true);
     } else {
-      menuClassList.replace("xl:top-16", "xl:top-[-100%]");
+      menuClassList?.replace("xl:top-16", "xl:top-[-100%]");
       setIsMenuOpen(false);
     }
   };
@@ -141,6 +144,15 @@ const Header = () => {
     closeMob();
     setIsMenuOpenIcon(false);
   };
+  const pathname = usePathname();
+
+  useEffect(() => {
+    if (pathname !== "/" || pathname === "/") {
+      menuClassList?.replace("xl:top-16", "xl:top-[-100%]");
+      setIsMenuOpen(true);
+      setIsMenuOpen(false);
+    }
+  }, [pathname]);
 
   return (
     <>
@@ -169,62 +181,16 @@ const Header = () => {
             >
               {cachedData?.header &&
                 cachedData?.header?.map((item: any, i: number) => (
-                  <li
+                  <AltMenu
                     key={i}
-                    ref={opacityLi}
-                    onClick={() => openAltMenu(item?.alt_menu)}
-                    className={` nav_item flex gap-2 xl:gap-0  h-full  cursor-pointer  xl:transition-all xl:ease-out     tl  items-center justify-center text-lg font-semibold text-[#fff] border-[1px] border-solid border-transparent  relative z-[250]  xl:justify-start xl:bg-transparent xl:text-[#ec5a44] xl:border-b-[1px] bg:border-solid xl:border-b-[#0000008a] 2xl:text-[13px] md:p-[4px] xl:flex-col xl:items-start`}
-                  >
-                    <div className="w-full h-full  p-[8px] lg:p-[2px] uppercase bg-[#ec5a44] xl:bg-transparent rounded-md">
-                      {item?.alt_menu?.length > 0 ? (
-                        <div className="flex items-center">
-                          <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
-                            {item?.menu_en}
-                          </h1>
-                          <FaAngleDown className={`xl:text-[#ec5a44] `} />
-                        </div>
-                      ) : (
-                        <Link
-                          href={item?.slug_en}
-                          prefetch={true}
-                          className="flex items-center"
-                        >
-                          <h1 className="text-white xl:text-[#ec5a44] 2xl:text-[13px]">
-                            {item?.menu_en}
-                          </h1>
-                        </Link>
-                      )}
-                      {item?.alt_menu && item?.alt_menu?.length > 0 && (
-                        <ul
-                          ref={alt_item}
-                          className={`absolute top-0 left-0 right-0 alt_item flex w-max xl:static bg-[#fff] xl:bg-transparent flex-col tlss rounded-md py-[7px] px-[20px] xl:px-[5px] tl opacity-0 invisible xl:opacity-100 xl:visible  ${
-                            isMobile
-                              ? openSubCategory === item?.alt_menu
-                                ? "xl:flex h-auto bg-[#fff]"
-                                : "xl:hidden h-0"
-                              : ""
-                          }`}
-                        >
-                          {item?.alt_menu?.map((item: any, i: number) => {
-                            return (
-                              <li
-                                key={i}
-                                className="text-[#4f4f4f] capitalize  hover:text-[#ec5a44] tl inline-block text-[14px]"
-                              >
-                                <Link
-                                 
-                                  className="py-[14px] xl:py-[5px] inline-block"
-                                  href={`/${item?.slug_en}`}
-                                >
-                                  {item?.menu_en}
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      )}
-                    </div>
-                  </li>
+                    refkey={opacityLi}
+                    refkey2={alt_item}
+                    openSubCategory={openSubCategory}
+                    isMobile={isMobile}
+                    openAltMenu={() => openAltMenu(item?.alt_menu)}
+                    items={item}
+                    openMenu={openMenu}
+                  />
                 ))}
               <li
                 onClick={openContactMenu}
@@ -239,69 +205,17 @@ const Header = () => {
                   className={`absolute contactLi top-[55px] left-0 px-[20px] py-[20px] rounded-md right-0  w-[400px] h-auto text-black tl bg-[#fff]
                     ${isMobile ? "contactliInnerMob" : "contactliInner"}`}
                 >
-                  <div className="flex flex-col gap-2 bg-white">
-                    <div className="flex items-center border-b-[1px] pb-3">
-                      <span className="text-[13px] capitalize">
-                        email :
-                        <a
-                          className="lowercase pl-1"
-                          href={`mailto:${cachedData?.sosials?.email}`}
-                        >
-                          {cachedData?.sosials?.email}
-                        </a>
-                      </span>
-                    </div>
-                    <div className="flex items-center border-b-[1px] pb-3">
-                      <span className="text-[13px] capitalize">
-                        adress :
-                        <a
-                          className="lowercase pl-1"
-                          target="_blank"
-                          href={`${cachedData?.sosials?.map}`}
-                        >
-                          {cachedData?.sosials?.unvan_en}
-                        </a>
-                      </span>
-                    </div>
-                    <ul className="flex items-center gap-5 mt-2">
-                      {sosicals?.map((item, i) => (
-                        <li
-                          key={i}
-                          className="text-[#f44] text-[25px] tl hover:-translate-y-2"
-                        >
-                          <a
-                            href={item?.link}
-                            className="inline-block md:text-[20px]"
-                            target="_blank"
-                          >
-                            {item?.icon}
-                          </a>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
+                  <EmailAndAdress
+                    sosicals={sosicals}
+                    email={cachedData?.sosials?.email}
+                    map={cachedData?.sosials?.map}
+                    adress={cachedData?.sosials?.unvan_en}
+                  />
                 </div>
               </li>
-              <li
-                onClick={openInput}
-                className="flex h-full  px-[18px] cursor-pointer  uppercase xl:hidden  bg-[#ec5a44] lg:bg-transparent rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid lg:border-0 "
-              >
-                <IoSearch className="text-[25px] xl:text-[#ec5a44]" />
-              </li>
-              <li
-                style={{
-                  background: mobileSupport,
-                }}
-                className={` flex gap-2 h-full  p-[8px] cursor-pointer   uppercase rounded-md tl  items-center justify-center text-lg font-semibold text-white border-[1px] border-solid border-transparent xl:items-start xl:justify-start xl:bg-transparent xl:text-[#ec5a44] 2xl:text-[13px] md:p-[4px]`}
-              >
-                <Link
-                  href="/supportus"
-                  target="_blank"
-                  className="text-white xl:text-[#ec5a44]"
-                >
-                  support us
-                </Link>
-              </li>
+              <IoSearchLi openInput={openInput} />
+              <SupportUs mobileSupport={mobileSupport} />
+
               <li className="">
                 <div className="flex items-center  w-full relative ">
                   <input
@@ -323,7 +237,10 @@ const Header = () => {
             </ul>
             <div className="hidden xl:flex mt-1 mr-5">
               {isMenuOpenIcon ? (
-                <IoMdClose onClick={closeSearch}  className="text-2xl text-[#ec5a44] cursor-pointer" />
+                <IoMdClose
+                  onClick={closeSearch}
+                  className="text-2xl text-[#ec5a44] cursor-pointer"
+                />
               ) : (
                 <FaSearch
                   onClick={openSearch}

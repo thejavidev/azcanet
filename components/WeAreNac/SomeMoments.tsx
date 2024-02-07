@@ -10,7 +10,7 @@ import "swiper/css/pagination";
 import Image from "next/image";
 const SomeMoments = () => {
   const { cachedData } = FetchData(["moments"]);
-
+  const notfoundImg = "/notfound.webp";
   return (
     <>
       <div className="px-[50px] py-[20px] mb-10 mt-20 lg:py-[20px] lg:px-[20px] some_moments ">
@@ -58,9 +58,9 @@ const SomeMoments = () => {
                       <div className="relative overflow-hidden">
                         <div className="w-full">
                           <LightGallery elementClassNames="custom-wrapper-class">
-                            <a href={item?.src}>
+                            <a href={item?.src ? item?.src: notfoundImg}>
                               <Image
-                                src={item?.src}
+                                src={item?.src ? item?.src :notfoundImg}
                                 alt=""
                                 width={1000}
                                 height={500}

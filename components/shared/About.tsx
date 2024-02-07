@@ -17,6 +17,7 @@ const About: React.FC<AboutProps> = ({
   url,
   bg,
 }) => {
+  const notfoundImg = "/notfound.webp";
   return (
     <>
       <div
@@ -45,7 +46,7 @@ const About: React.FC<AboutProps> = ({
         </div>
         <div className="w-[50%] lg:w-full">
           <Image
-            src={url}
+            src={url ? url : notfoundImg}
             width={1000}
             height={500}
             alt={`Picture of the ${title}`}

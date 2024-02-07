@@ -46,7 +46,7 @@ const page = () => {
             images={cachedData?.options?.media?.media_src}
           />
         </div>
-        <div className="mt-6 grid grid-cols-12 gap-6 px-[100px]">
+        <div className="mt-6 grid grid-cols-12 gap-6 px-[100px] 2xl:px-[50px] lg:px-[20px]">
           {cachedData?.media &&
             cachedData?.media?.slice?.(0, next)?.map((item: any, i: number) => {
               return (
@@ -63,7 +63,7 @@ const page = () => {
           {next < cachedData?.media?.length && (
             <button
               onClick={handleMoreImage}
-              className="border-[1px] border-solid border-[#ec5a44] text-[#ec5a44] p-[10px] font-semibold text-lg uppercase rounded-md tl hover:bg-[#ec5a44] hover:text-white"
+              className="border-[1px] border-solid border-[#ec5a44] text-[#ec5a44] p-[10px] font-semibold text-lg lg:text-sm uppercase rounded-md tl hover:bg-[#ec5a44] hover:text-white"
             >
               See more
             </button>

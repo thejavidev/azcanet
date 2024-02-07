@@ -92,40 +92,12 @@
   .slider {
     height: 500px;
   }
-}
-
-@media (max-width: 992px) {
-  .slider-content h3 {
-    font-size: 30px;
-  }
-  .slider-content p {
-    font-size: 18px;
-    line-height: 25px;
-  }
-  .slider-content {
-    top: 47%;
-    left: 5%;
-  }
-  .slider-btn {
-    position: absolute;
-    background: #ec5a44;
-    color: #fff;
-
-    padding: 10px;
-    border-radius: 4px;
-  }
-  .slider-bts {
-    position: absolute;
-    top: 90%;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  .slider-btn {
-    position: static;
+  .tab-content :is(h1, h2, h3, h4, h5, h6){
+    font-size: 20px;
   }
 }
+
+
 
 @media (max-width: 767px) {
   .slider-content {
@@ -183,4 +155,53 @@
 .inputIcon{
   visibility: hidden;
   opacity: 0;
+}
+@media (max-width: 992px) {
+  .slider-content h3 {
+    font-size: 30px;
+  }
+  .slider-content p {
+    font-size: 18px;
+    line-height: 25px;
+  }
+  .slider-content {
+    top: 47%;
+    left: 5%;
+  }
+  .slider-btn {
+    position: absolute;
+    background: #ec5a44;
+    color: #fff;
+
+    padding: 10px;
+    border-radius: 4px;
+  }
+  .slider-bts {
+    position: absolute;
+    top: 90%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  .slider-btn {
+    position: static;
+  }
+  .tab-content :is(h1, h2, h3, h4, h5, h6){
+    font-size: 16px;
+  }
+  .contentstatments  > span{
+    font-size: 13px !important;
+  }
+  .contentstatments p{
+    margin: 10px 0 !important;
+  }
+}
+@media (max-width: 767px) {
+  .slider-content h3{
+    font-size: 20px;
+  }
+  .slider-content p{
+    font-size: 15px;
+  }
 }
