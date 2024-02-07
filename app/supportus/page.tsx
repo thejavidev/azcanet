@@ -47,26 +47,26 @@ const page = () => {
         transition={{ duration: 0.75, ease: "easeOut" }}
       >
         <Breadcrumb pageNames={pageNames} />
-        <div className="mt-5 py-[30px] px-[150px] text-center">
+        <div className="mt-5 lg:mt-0 py-[30px] px-[150px] 2xl:px-[50px] lg:px-[20px] text-center">
           <p
-            className="uppercase text-2xl font-bold mb-3 mt-6"
+            className="uppercase text-2xl lg:text-lg font-bold mb-3 mt-6 "
             dangerouslySetInnerHTML={{
               __html: cachedData?.options?.support?.support_top_title,
             }}
           ></p>
           <p
-            className="text-lg px-5 py-0 m-0"
+            className="text-lg lg:text-sm px-5 py-0 m-0 md:px-1"
             dangerouslySetInnerHTML={{
               __html: cachedData?.options?.support?.support_top_title_2,
             }}
           ></p>
           <p
-            className="text-lg px-5 py-0 mt-5"
+            className="text-lg lg:text-sm px-5 py-0 mt-5"
             dangerouslySetInnerHTML={{
               __html: cachedData?.options?.support?.support_top_title_3,
             }}
           ></p>
-          <div className="grid grid-cols-12 gap-6 mt-10 mb-20">
+          <div className="grid grid-cols-12 gap-6 mt-10 mb-20 lg:mb-4">
             {cards &&
               cards?.map((elem, i) => {
                 let hostName = "";
@@ -77,7 +77,7 @@ const page = () => {
                   hostName = window.location.host;
                 }
                 return (
-                  <div key={i} className="col-span-4 tl hover:scale-105">
+                  <div key={i} className="col-span-4 xl:col-span-6 lg:col-span-12 tl hover:scale-105">
                     <div className="flex items-center justify-center flex-col  h-full">
                       <Link
                         target={
@@ -100,7 +100,7 @@ const page = () => {
                 );
               })}
           </div>
-          <div className="contentstatments" dangerouslySetInnerHTML={{__html: cachedData?.options?.support?.support_bottom_text}}>
+          <div className="contentstatments " dangerouslySetInnerHTML={{__html: cachedData?.options?.support?.support_bottom_text}}>
 
           </div>
         </div>

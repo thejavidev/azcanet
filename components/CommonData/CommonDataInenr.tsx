@@ -13,12 +13,12 @@ const CommonDataInenr = ({ images, title1, title2 }: any) => {
               alt=""
               width={1000}
               height={300}
-              className="w-full object-cover h-[350px]"
+              className="w-full object-cover h-[350px] lg:h-[250px]"
             />
           ))}
-        <div className="px-[150px] py-[20px] contentstatments">
+        <div className="px-[150px] 2xl:px-[50px] lg:px-[20px] py-[20px] contentstatments">
           <h3
-            className="font-bold text-3xl px-4"
+            className="font-bold text-3xl lg:text-lg md:text-sm px-4"
             dangerouslySetInnerHTML={{ __html: title1 }}
           ></h3>
           <p

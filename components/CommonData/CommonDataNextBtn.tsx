@@ -7,7 +7,7 @@ const CommonDataNextBtn = ({next,cachedData,handleMoreImage}:any) => {
         {next < cachedData?.length && (
           <button
             onClick={handleMoreImage}
-            className="border-[1px] border-solid border-[#ec5a44] text-[#ec5a44] p-[10px] font-semibold text-lg uppercase rounded-md tl hover:bg-[#ec5a44] hover:text-white"
+            className="border-[1px] border-solid border-[#ec5a44] text-[#ec5a44] p-[10px] font-semibold text-lg md:text-sm uppercase rounded-md tl hover:bg-[#ec5a44] hover:text-white"
           >
             See more
           </button>

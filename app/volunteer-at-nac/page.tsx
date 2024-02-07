@@ -39,7 +39,7 @@ const page = () => {
           />
         </div>
         <div
-          className="py-[30px] px-[100px] tab-content media"
+          className="py-[30px] px-[100px] 2xl:px-[50px] lg:px-[20px] tab-content media md:text-sm"
           dangerouslySetInnerHTML={{
             __html:
               cachedData?.options?.volunteer &&

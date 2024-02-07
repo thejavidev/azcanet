@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Carousel from "@/components/HomePage/Carousel/Carousel";
 import Press from "@/components/HomePage/Press/Press";
 import Contributor from "@/components/HomePage/Contributor/Contributor";
@@ -7,13 +7,10 @@ import Mission from "@/components/HomePage/Mission/Mission";
 import Advocacy from "@/components/Advocacy/Advocacy";
 import { motion as m } from "framer-motion";
 
-
 const HomePage = () => {
- 
- 
   return (
     <>
-     <title>Azcanet.ca - Home Page</title>
+      <title>Azcanet.ca - Home Page</title>
       <m.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}

@@ -4,7 +4,23 @@ const SiteLoading = () => {
   return (
     <>
       <div className="flex justify-center items-center bg-[#eee] h-screen fixed top-0 right-0 left-0 z-[800] transition-all">
-        <div className="w-[64px] h-[64px] relative bg-[#fff] rounded-sm overflow-hidden loader"></div>
+        <div className="fire">
+          <div className="fire-left">
+            <div className="main-fire"></div>
+            <div className="particle-fire"></div>
+          </div>
+          <div className="fire-center">
+            <div className="main-fire"></div>
+            <div className="particle-fire"></div>
+          </div>
+          <div className="fire-right">
+            <div className="main-fire"></div>
+            <div className="particle-fire"></div>
+          </div>
+          <div className="fire-bottom">
+            <div className="main-fire"></div>
+          </div>
+        </div>
       </div>
     </>
   );

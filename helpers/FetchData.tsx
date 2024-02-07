@@ -25,4 +25,6 @@ const FetchData = (section: string[]) => {
   return { cachedData };
 };
 
+
+
 export default FetchData;
