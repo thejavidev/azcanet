@@ -1,15 +1,12 @@
 import { setSession } from "@/helpers/utils";
-import { apiFetch } from "@/types/apiType";
-
-let cache: { timestamp: number; data: apiFetch } | null = null;
 
 export const Get = async () => {
   const cacheTime = 60000; // Önbellekteki verinin geçerlilik süresi (milisaniye cinsinden)
   const refetchOnmount = false;
 
   const cacheKey = "myCacheKey";
-  const cachedData = localStorage.getItem(cacheKey);
-  
+  const cachedData = localStorage?.getItem(cacheKey);
+
   const currentTime = new Date().getTime();
 
   if (cachedData && !refetchOnmount) {
@@ -30,20 +27,18 @@ export const Get = async () => {
     if (
       cachedData &&
       JSON.stringify(jsonData) === JSON.stringify(JSON.parse(cachedData))
-      
     ) {
       return JSON.parse(cachedData);
     }
 
     // Elde edilen veriyi önbelleğe ekle
     setSession(cacheKey, jsonData);
-   
+
     return jsonData;
   } catch (error) {
     console.error("Error fetching data:", error);
 
     // Return a placeholder value indicating that the data couldn't be fetched
     return { error: "Data couldn't be fetched" };
-    
   }
 };

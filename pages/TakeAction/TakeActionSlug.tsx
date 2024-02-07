@@ -1,16 +1,16 @@
 "use client";
-import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
-import GlobalBanner from "@/components/GlobalBanner/GlobalBanner";
+import React from "react";
 import FetchData from "@/helpers/FetchData";
-import React, { useEffect } from "react";
+import GlobalBanner from "@/components/GlobalBanner/GlobalBanner";
+import { useEffect } from "react";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
 
-const TakeSLug = ({ id }: any) => {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+const TakeActionSlug = ({ params }: any) => {
   const { cachedData } = FetchData(["take", "navbar_colors"]);
 
-  const currentPost = cachedData?.take?.find((post: any) => post?.id === id);
+  const currentPost = cachedData?.take?.find(
+    (post: any) => post?.slug_en === params?.slug
+  );
   const pageNames = [
     {
       name: "Home page",
@@ -25,10 +25,15 @@ const TakeSLug = ({ id }: any) => {
       link: `#`,
     },
   ];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
-      <Breadcrumb pageNames={pageNames} />
       <div className="mb-4">
+        <Breadcrumb pageNames={pageNames} />
         <GlobalBanner
           bgColor={cachedData?.navbar_colors?.section_bg}
           images={currentPost?.src}
@@ -43,4 +48,4 @@ const TakeSLug = ({ id }: any) => {
   );
 };
 
-export default TakeSLug;
+export default TakeActionSlug;

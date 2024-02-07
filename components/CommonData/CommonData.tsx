@@ -36,7 +36,7 @@ const CommonData = ({ cachedData, next, href }: any) => {
                     <div className="w-full md:flex md:justify-end">
                       <Link
                         className="mt-2 lg:mt-0 lg:text-right font-semibold text-xl md:text-lg"
-                        href={`/${href}/${cur?.id}`}
+                        href={`/${href}/${cur?.slug_en}`}
                       >
                         See more
                       </Link>
@@ -51,16 +51,6 @@ const CommonData = ({ cachedData, next, href }: any) => {
                           key={i}
                           className="relative overflow-hidden rounded-md "
                         >
-                          {Array?.isArray(item?.src) &&
-                            item?.src?.length === undefined && (
-                              <Image
-                                src="/notfound.webp"
-                                alt="picture"
-                                width={1000}
-                                height={400}
-                                className="w-full object-cover h-[300px] lg:h-[200px] rounded-md overflow-hidden"
-                              />
-                            )}
                           <Image
                             src={item?.src}
                             alt="picture"

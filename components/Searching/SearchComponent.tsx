@@ -92,12 +92,16 @@ const SearchComponent = ({ api }: any) => {
                         dangerouslySetInnerHTML={{ __html: newText }}
                       ></div>
                     </div>
-                    <div className="sticky z-30 bottom-[-15px]   w-max m-auto border-none outline-none  left-0 right-0 flex items-center justify-center text-black">
+                    <div className="sticky z-30 bottom-[-15px]  m-auto border-none outline-none  left-0 right-0 flex items-end justify-end text-black">
                       <button
                         className="px-4 py-2 capitalize font-bold w-[40px] tls h-[40px] grid place-content-center overflow-hidden bg-white rounded-full"
                         onClick={() => openSearch(index)}
                       >
-                        {isSelected ? <FaAnglesUp className=" anime" /> : <FaAnglesDown className="anime" />}
+                        {isSelected ? (
+                          <FaAnglesUp className=" anime" />
+                        ) : (
+                          <FaAnglesDown className="anime" />
+                        )}
                       </button>
                     </div>
                   </div>

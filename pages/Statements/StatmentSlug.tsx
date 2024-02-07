@@ -1,18 +1,14 @@
-"use client"
-import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
+"use client";
 import CommonDataInenr from "@/components/CommonData/CommonDataInenr";
-import FetchData from "@/helpers/FetchData";
 import React, { useEffect } from "react";
+import Breadcrumb from "@/components/Breadcrumb/Breadcrumb";
+import FetchData from "@/helpers/FetchData";
 
-const StatSlug = ({ id }: any) => {
+const StatmentSlug = ({ params }: any) => {
   const { cachedData } = FetchData(["statements"]);
-
   const currentPost = cachedData?.statements?.find(
-    (post: any) => post?.id === id
+    (post: any) => post?.slug_en === params?.slug
   );
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
   const pageNames = [
     {
       name: "Home page",
@@ -27,6 +23,13 @@ const StatSlug = ({ id }: any) => {
       link: `#`,
     },
   ];
+
+  
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <Breadcrumb pageNames={pageNames} />
@@ -39,4 +42,4 @@ const StatSlug = ({ id }: any) => {
   );
 };
 
-export default StatSlug;
+export default StatmentSlug;

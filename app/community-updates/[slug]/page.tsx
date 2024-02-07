@@ -1,36 +1,24 @@
-import { motion as m } from "framer-motion";
+// import { Get } from "@/services/fetchServices";
 
-import { useParams } from "next/navigation";
-import { Get } from "@/services/fetchServices";
+import CommunitySingle from "@/pages/Community/CommunitySingle";
 
-import ComunitySlug from "../componnets";
-
-const page = () => {
-  const { id } = useParams<any>();
-
+const page = ({ params }: any) => {
   return (
     <>
-      <title>Azcanet.ca - Community update</title>
-      <m.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
-        transition={{ duration: 0.75, ease: "easeOut" }}
-      >
-        <ComunitySlug id={id} />
-      </m.div>
+      <title>Azcanet.ca - Community update </title>
+      <CommunitySingle params={params} />
     </>
   );
 };
 
 export default page;
 
-export async function generateStaticParams() {
-  const data = await Get();
+// export async function generateStaticParams() {
+//   const data = await Get();
 
-  const comunityData = data?.comunity;
-  return comunityData?.map((ticket: any) => ({
-    fallback: false,
-    id: `${ticket?.id}`,
-  }));
-}
+//   const comunityData = data?.comunity;
+//   return comunityData?.map((ticket: any) => ({
+//     fallback: false,
+//     id: `${ticket?.id}`,
+//   }));
+// }
