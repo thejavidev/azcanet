@@ -46,7 +46,7 @@ const AltMenu = ({
                   : ""
               }`}
             >
-              {items?.alt_menu?.map((item: any, i: number) => {
+              {items?.alt_menu?.map((item: any, i: number) => { 
                 return (
                   <li
                     key={i}

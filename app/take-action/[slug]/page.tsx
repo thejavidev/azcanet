@@ -1,21 +1,17 @@
 import TakeActionSlug from "@/pages/TakeAction/TakeActionSlug";
-// import { Get } from "@/services/fetchServices";
 
-const page = ({ params }: any) => {
+export async function generateStaticParams() {
+  const posts = await fetch("https://azcanet.ca/api/home").then((res) =>
+    res.json()
+  );
+
+  return posts?.take?.map((post: any) => ({ slug: `${post?.slug}` }));
+}
+
+export default function page({ params }: any) {
   return (
     <>
       <TakeActionSlug params={params} />
     </>
   );
-};
-
-export default page;
-
-// export async function generateStaticParams() {
-//   const data = await Get();
-//   const comunityData = data?.take;
-//   return comunityData?.map((ticket: any) => ({
-//     fallback: false,
-//     id: `${ticket?.id}`,
-//   }));
-// }
+}

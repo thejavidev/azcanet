@@ -56,13 +56,7 @@ const SupportUs = () => {
           <div className="grid grid-cols-12 gap-6 mt-10 mb-20 lg:mb-4">
             {cards &&
               cards?.map((elem: any, i: number) => {
-                let hostName = "";
-                if (elem?.link?.startsWith("http")) {
-                  let url = new URL(elem?.link);
-                  hostName = url.host;
-                } else {
-                  hostName = window.location.host;
-                }
+                
                 return (
                   <div
                     key={i}
@@ -70,9 +64,7 @@ const SupportUs = () => {
                   >
                     <div className="flex items-center justify-center flex-col  h-full">
                       <Link
-                        target={
-                          window.location.host !== hostName ? "_blank" : ""
-                        }
+                       
                         href={elem?.link}
                         className="inline-block w-full h-full "
                       >

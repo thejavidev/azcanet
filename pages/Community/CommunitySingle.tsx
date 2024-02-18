@@ -5,33 +5,31 @@ import GlobalBanner from "@/components/GlobalBanner/GlobalBanner";
 import React, { useEffect } from "react";
 import FetchData from "@/helpers/FetchData";
 
-const CommunitySingle = ({params}:any) => {
-  
- 
-    useEffect(() => {
-        window.scrollTo(0, 0);
-      }, []);
-      const { cachedData } = FetchData(["comunity", "navbar_colors"]);
+const CommunitySingle = ({ params }: any) => {
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+  const { cachedData } = FetchData(["comunity", "navbar_colors"]);
 
-      const currentPost = cachedData?.comunity?.find(
-        (post: any) => post?.slug_en === params?.slug
-      );
+  const currentPost = cachedData?.comunity?.find(
+    (post: any) => post?.slug_en === params?.slug
+  );
 
-      const pageNames = [
-        {
-          name: "Home page",
-          link: "/",
-        },
-        {
-          name: "comunity",
-          link: "/community-updates",
-        },
-        {
-          name: `${currentPost?.title_en}`,
-          link: `#`,
-        },
-      ];
-    
+  const pageNames = [
+    {
+      name: "Home page",
+      link: "/",
+    },
+    {
+      name: "comunity",
+      link: "/community-updates",
+    },
+    {
+      name: `${currentPost?.title_en}`,
+      link: `#`,
+    },
+  ];
+
   return (
     <>
       <m.div
